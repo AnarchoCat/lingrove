@@ -13,13 +13,26 @@
 		"commands": {
 			"command": "mmimy.hello",
 			"title": "Hello World"
-		}
+		},
+		"customEditors": [
+			{
+				"viewType": "mmimy.test",
+				"displayName": "Test",
+				"selector": [
+					{
+						"filenamePattern": "*.mmimy"
+					}
+				]
+			}
+		]
 	},
 	"scripts": {
 		"dev": "vite build --mode development",
 		"dev:watch": "vite build --mode development --watch",
 		"build": "vite build",
 		"build:watch": "vite build --watch",
+		"build-media": "vite build --config vite.config.media.ts",
+		"build-media:watch": "vite build --config vite.config.media.ts --watch",
 		"check": "tsc --noEmit",
 		"package": "vsce package",
 		"format": "prettier . --write",

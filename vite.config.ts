@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import { readdirSync } from 'fs'
+import commonOptions from './vite.config.common'
 
 export default defineConfig(({ mode }) => {
 	const srcDir = resolve(__dirname, 'src')
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => {
 		return acc
 	}, {})
 	return {
+		...commonOptions,
 		build: {
 			lib: {
 				entry: entries,
@@ -24,14 +26,6 @@ export default defineConfig(({ mode }) => {
 			},
 			rollupOptions: {
 				external: ['vscode', 'assert'],
-			},
-			outDir: 'dist',
-			sourcemap: true,
-			emptyOutDir: true,
-		},
-		resolve: {
-			alias: {
-				'@': resolve(__dirname, 'src'),
 			},
 		},
 	}
