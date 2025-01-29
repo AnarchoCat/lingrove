@@ -4,7 +4,6 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': resolve(__dirname, 'src'),
-			'@media': resolve(__dirname, 'src/media'),
 		},
 	},
 	build: {

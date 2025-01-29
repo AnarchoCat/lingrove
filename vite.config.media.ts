@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
 			outDir: 'dist/media',
 			rollupOptions: {
 				input: {
-					test: '@media/test.ts',
+					catScratchEditor: '@/catScratchEditor/main.ts',
 				},
 				output: {
 					entryFileNames: '[name].js',

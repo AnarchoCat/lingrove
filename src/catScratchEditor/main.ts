@@ -1,4 +1,4 @@
-import './test.css'
+import './style.css'
 import App from './app.vue'
 import { createApp } from 'vue'
 let count = 0

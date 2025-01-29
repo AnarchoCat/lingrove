@@ -16,8 +16,8 @@
 		},
 		"customEditors": [
 			{
-				"viewType": "mmimy.test",
-				"displayName": "Test",
+				"viewType": "mmimy.catScratch",
+				"displayName": "catScratch",
 				"selector": [
 					{
 						"filenamePattern": "*.mmimy"

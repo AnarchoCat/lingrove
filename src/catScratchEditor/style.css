@@ -1,4 +1,5 @@
 @import 'tailwindcss' source(none);
 
-@source "../testEditor.ts";
+@source "./index.html";
+@source "./index.ts";
 @source "./test.ts";

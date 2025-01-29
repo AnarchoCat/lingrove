@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { register } from './testEditor'
+import { register } from '@/catScratchEditor'
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposable = vscode.commands.registerCommand('mmimy.hello', () => {
