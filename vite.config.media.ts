@@ -6,13 +6,15 @@ export default defineConfig(({ mode }) => {
 	return {
 		...commonOptions,
 		build: {
+			outDir: 'dist/media',
 			rollupOptions: {
 				input: {
 					test: '@media/test.ts',
 				},
 				output: {
-					entryFileNames: 'media/[name].js',
+					entryFileNames: '[name].js',
 					format: 'es',
+					assetFileNames: '[name].[ext]',
 				},
 			},
 		},

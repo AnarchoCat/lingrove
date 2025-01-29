@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
 			rollupOptions: {
 				external: ['vscode', 'assert'],
 			},
+			emptyOutDir: false,
 		},
 	}
 })
