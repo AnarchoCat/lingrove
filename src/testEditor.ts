@@ -26,6 +26,7 @@ class TestEditorProvider implements vscode.CustomTextEditorProvider {
 			<body>
 					<h1 class="font-bold text-red-800" id="lines-of-code-counter">0</h1>
 					<button class="btn">Click</button>
+					<div id="app"></div>
 
 					<script src="${webviewPanel.webview.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri, 'dist/media', 'test.js'))}">
 					</script>

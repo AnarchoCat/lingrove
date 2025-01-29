@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import commonOptions from './vite.config.common'
+import vue from '@vitejs/plugin-vue'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default defineConfig(({ mode }) => {
 	return {
 		...commonOptions,
+		plugins: [vue()],
 		build: {
 			outDir: 'dist/media',
 			rollupOptions: {
