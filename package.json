@@ -1,0 +1,64 @@
+{
+	"name": "mmimy",
+	"displayName": "Maomao i Moyu",
+	"version": "0.0.1",
+	"main": "dist/extension.js",
+	"engines": {
+		"node": "^23.6.0",
+		"vscode": "^1.96.0"
+	},
+	"publisher": "AnarchoCat",
+	"activationEvents": [],
+	"contributes": {
+		"commands": {
+			"command": "mmimy.hello",
+			"title": "Hello World"
+		}
+	},
+	"scripts": {
+		"dev": "vite build --mode development",
+		"dev:watch": "vite build --mode development --watch",
+		"build": "vite build",
+		"build:watch": "vite build --watch",
+		"check": "tsc --noEmit",
+		"package": "vsce package",
+		"format": "prettier . --write",
+		"lint": "eslint .",
+		"prepare": "husky",
+		"commitlint": "commitlint --edit",
+		"pretest": "npm run dev",
+		"test": "NODE_TLS_REJECT_UNAUTHORIZED=0 vscode-test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AnarchoCat/mmimy.git"
+	},
+	"keywords": [],
+	"author": "Anarcho Cat <d2717p@gmail.com>",
+	"license": "GPL-3.0-only",
+	"bugs": {
+		"url": "https://github.com/AnarchoCat/mmimy/issues"
+	},
+	"homepage": "https://github.com/AnarchoCat/mmimy#readme",
+	"description": "A moyu extension made by a moyu cat for moyu",
+	"categories": [
+		"Other"
+	],
+	"devDependencies": {
+		"@commitlint/cli": "^19.6.1",
+		"@commitlint/config-conventional": "^19.6.0",
+		"@eslint/js": "^9.19.0",
+		"@types/node": "^22.12.0",
+		"@types/vscode": "^1.96.0",
+		"@vscode/test-cli": "^0.0.10",
+		"@vscode/test-electron": "^2.4.1",
+		"eslint": "^9.19.0",
+		"globals": "^15.14.0",
+		"husky": "^9.1.7",
+		"prettier": "^3.4.2",
+		"typescript": "^5.7.3",
+		"typescript-eslint": "^8.22.0",
+		"vite": "^6.0.11",
+		"vsce": "^2.15.0"
+	}
+}

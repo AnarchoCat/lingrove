@@ -1,0 +1,17 @@
+.husky/**
+.vscode/**
+.vscode-test/**
+node_modules/**
+src/**
+.gitignore
+.prettierignore
+.prettierrc
+**/.vscode-test.*
+**/commitlint.config.*
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+**/vite.config.*
+**/mise.toml
