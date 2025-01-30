@@ -23,6 +23,15 @@
 						"filenamePattern": "*.mmimy"
 					}
 				]
+			},
+			{
+				"viewType": "wordNotesEditor",
+				"displayName": "Word Notes Editor",
+				"selector": [
+					{
+						"filenamePattern": "*.mtxt"
+					}
+				]
 			}
 		]
 	},
