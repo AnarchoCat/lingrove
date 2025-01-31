@@ -1,8 +1,8 @@
 import * as vscode from 'vscode'
-import * as fs from 'fs'
 import * as path from 'path'
 import { getNonce, getMediaUri, renderTemplate, cspMeta } from '@/utils'
 import html from './index.html?raw'
+import { Dictionary } from '@/dictionaryData'
 
 export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = 'mmimy.dictionaryView'
@@ -10,24 +10,19 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 
 	private _view?: vscode.WebviewView
 	private _selectedText: string = ''
-	private _dictionaryFilePath: string
 	private _context: vscode.ExtensionContext
+	private _dictionary: Dictionary
 
 	constructor(private readonly context: vscode.ExtensionContext) {
 		DictionaryViewProvider.currentInstance = this
 		this._context = context
 		// Initialize the dictionary file path
-		this._dictionaryFilePath = path.join(
+		const dictionaryFilePath = path.join(
 			context.globalStorageUri.fsPath,
 			'dictionary.json',
 		)
-		// Ensure the dictionary file exists
-		if (!fs.existsSync(context.globalStorageUri.fsPath)) {
-			fs.mkdirSync(context.globalStorageUri.fsPath, { recursive: true })
-		}
-		if (!fs.existsSync(this._dictionaryFilePath)) {
-			fs.writeFileSync(this._dictionaryFilePath, JSON.stringify({}, null, 2))
-		}
+		this._dictionary = new Dictionary(dictionaryFilePath)
+		context.subscriptions.push(this._dictionary)
 	}
 
 	public resolveWebviewView(webviewView: vscode.WebviewView) {
@@ -66,10 +61,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 		if (!this._view) {
 			return
 		}
-		const dictionary = this._loadDictionary()
-
-		const note = dictionary[this._selectedText] || ''
-
+		const note = this._dictionary.query(this._selectedText)
 		this._view.webview.postMessage({
 			word: this._selectedText,
 			note: note,
@@ -77,10 +69,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 	}
 
 	private _saveNote(text: string, note: string) {
-		const dictionary = this._loadDictionary()
-		dictionary[text] = note
-		this._saveDictionary(dictionary)
-
+		this._dictionary.record(text, note)
 		vscode.window.showInformationMessage(`Saved note for "${text}".`)
 	}
 
@@ -101,26 +90,5 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 			cspMeta: cspMeta(this._view!.webview.cspSource, nonce),
 		}
 		return renderTemplate(html, data)
-	}
-	private _loadDictionary(): { [key: string]: string } {
-		try {
-			const data = fs.readFileSync(this._dictionaryFilePath, 'utf8')
-			return JSON.parse(data)
-		} catch {
-			vscode.window.showErrorMessage('Failed to load the dictionary.')
-			return {}
-		}
-	}
-
-	// Helper function to save the dictionary
-	private _saveDictionary(dictionary: { [key: string]: string }) {
-		try {
-			fs.writeFileSync(
-				this._dictionaryFilePath,
-				JSON.stringify(dictionary, null, 4),
-			)
-		} catch {
-			vscode.window.showErrorMessage('Failed to save the dictionary.')
-		}
 	}
 }
