@@ -17,14 +17,19 @@ export class Dictionary implements vscode.Disposable {
 	}
 
 	public record(word: string, definition: string, language?: string) {
-		if (language === undefined) {
-			language = Dictionary.defaultLanguage
+		if (word) {
+			if (language === undefined) {
+				language = Dictionary.defaultLanguage
+			}
+			if (!(language in this._data)) {
+				this._data[language] = {}
+			}
+			if (word in this._data[language] && definition.length < 1) {
+				delete this._data[language][word]
+			} else {
+				this._data[language][word] = definition
+			}
 		}
-		if (!(language in this._data)) {
-			this._data[language] = {}
-		}
-		console.log(this._data)
-		this._data[language][word] = definition
 	}
 
 	public query(word: string, language?: string) {

@@ -10,10 +10,10 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 
 	private _view?: vscode.WebviewView
 	private _selectedText: string = ''
-	private _context: vscode.ExtensionContext
+	private readonly _context: vscode.ExtensionContext
 	private _dictionary: Dictionary
 
-	constructor(private readonly context: vscode.ExtensionContext) {
+	constructor(context: vscode.ExtensionContext) {
 		DictionaryViewProvider.currentInstance = this
 		this._context = context
 		// Initialize the dictionary file path
@@ -69,8 +69,10 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 	}
 
 	private _saveNote(text: string, note: string) {
-		this._dictionary.record(text, note)
-		vscode.window.showInformationMessage(`Saved note for "${text}".`)
+		if (text) {
+			this._dictionary.record(text, note)
+			vscode.window.showInformationMessage(`Saved note for "${text}".`)
+		}
 	}
 
 	private _getHtmlForWebview(): string {

@@ -1,6 +1,6 @@
 <template>
 	<div class="flex flex-col justify-center items-center gap-2">
-		<h2>{{ word }}</h2>
+		<p>{{ word ?? 'Nothing selected' }}</p>
 		<textarea
 			id="note"
 			v-model="note"
