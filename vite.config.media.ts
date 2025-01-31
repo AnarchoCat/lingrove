@@ -12,11 +12,13 @@ export default defineConfig(({ mode }) => {
 			rollupOptions: {
 				input: {
 					catScratchEditor: '@/catScratchEditor/main.ts',
+					dictionaryView: '@/dictionaryView/main.ts',
 				},
 				output: {
 					entryFileNames: '[name].js',
 					format: 'es',
 					assetFileNames: '[name].[ext]',
+					chunkFileNames: '[name].js',
 				},
 			},
 		},

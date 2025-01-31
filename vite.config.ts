@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
 				fileName: '[name]',
 			},
 			rollupOptions: {
-				external: ['vscode', 'assert'],
+				external: ['vscode', 'assert', 'fs', 'path'],
 			},
 			emptyOutDir: false,
 		},

@@ -3,15 +3,13 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Test</title>
+		{{ cspMeta }}
+		<title>Dictionary Manager</title>
 		<link rel="stylesheet" href="{{ cssPath }}" />
 	</head>
 
 	<body>
-		<h1 class="font-bold text-red-800" id="lines-of-code-counter">0</h1>
-		<button class="btn">Click</button>
 		<div id="app"></div>
-
-		<script type="module" src="{{ jsPath }}"></script>
+		<script type="module" src="{{ jsPath }}" nonce="{{ nonce }}"></script>
 	</body>
 </html>

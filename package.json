@@ -10,10 +10,16 @@
 	"publisher": "AnarchoCat",
 	"activationEvents": [],
 	"contributes": {
-		"commands": {
-			"command": "mmimy.hello",
-			"title": "Hello World"
-		},
+		"commands": [
+			{
+				"command": "mmimy.hello",
+				"title": "Hello World"
+			},
+			{
+				"command": "mmimy.addToDictionary",
+				"title": "Add to Dictionary"
+			}
+		],
 		"customEditors": [
 			{
 				"viewType": "mmimy.catScratch",
@@ -33,7 +39,17 @@
 					}
 				]
 			}
-		]
+		],
+		"views": {
+			"explorer": [
+				{
+					"type": "webview",
+					"id": "mmimy.dictionaryView",
+					"title": "My Webview View",
+					"name": "Dic"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"dev": "vite build --mode development",
@@ -77,6 +93,8 @@
 		"@vscode/test-cli": "^0.0.10",
 		"@vscode/test-electron": "^2.4.1",
 		"eslint": "^9.19.0",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-vue": "^9.32.0",
 		"globals": "^15.14.0",
 		"husky": "^9.1.7",
 		"postcss": "^8.5.1",
@@ -88,6 +106,7 @@
 		"vsce": "^2.15.0"
 	},
 	"dependencies": {
+		"@types/vscode-webview": "^1.57.5",
 		"vue": "^3.5.13"
 	}
 }
