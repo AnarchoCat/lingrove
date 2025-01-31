@@ -45,8 +45,8 @@
 				{
 					"type": "webview",
 					"id": "mmimy.dictionaryView",
-					"title": "My Webview View",
-					"name": "Dic"
+					"title": "Dictionary View",
+					"name": "Dictionary"
 				}
 			]
 		}

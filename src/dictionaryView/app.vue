@@ -1,10 +1,15 @@
 <template>
-	<div>
+	<div class="flex flex-col justify-center items-center gap-2">
 		<h2>{{ word }}</h2>
-		<textarea id="note" v-model="note"></textarea>
+		<textarea
+			id="note"
+			v-model="note"
+			class="text-input-foreground bg-input-background placeholder:text-input-placeholderForeground w-full"
+		></textarea>
 		<button
 			id="saveButton"
-			class="text-button-foreground bg-button-background border-button-border"
+			type="button"
+			class="text-button-foreground bg-button-background border border-transparent rounded-xs hover:bg-button-hoverBackground w-full max-w-90 cursor-pointer py-1"
 			@click="save"
 		>
 			Save
