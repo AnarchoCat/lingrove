@@ -1,15 +1,23 @@
 import fs from 'fs'
 import path from 'path'
 import * as vscode from 'vscode'
+import TrieSearch from 'trie-search'
 export class Dictionary implements vscode.Disposable {
 	static defaultLanguage: string = 'en'
 	_path: string
 	_data: {
 		[language: string]: Record<string, string>
 	}
+	_tries: {
+		[language: string]: TrieSearch<{
+			_key_: string
+			value: string
+		}>
+	}
 	constructor(filePath: string) {
 		this._path = filePath
 		this._data = this._load()
+		this._tries = {}
 	}
 
 	public dispose() {
@@ -26,8 +34,16 @@ export class Dictionary implements vscode.Disposable {
 			}
 			if (word in this._data[language] && definition.length < 1) {
 				delete this._data[language][word]
+				if (language in this._tries) {
+					this._tries[language].remove(word)
+				}
 			} else {
 				this._data[language][word] = definition
+				if (language in this._tries) {
+					this._tries[language].addFromObject({
+						[word]: definition,
+					})
+				}
 			}
 		}
 	}
@@ -46,16 +62,17 @@ export class Dictionary implements vscode.Disposable {
 		if (language === undefined) {
 			language = Dictionary.defaultLanguage
 		}
-		const result: string[] = []
+
 		if (!(language in this._data)) {
-			return result
+			return []
 		}
-		for (const w in this._data[language]) {
-			if (w.startsWith(prefix)) {
-				result.push(w)
-			}
+		if (this._tries[language] === undefined) {
+			this._tries[language] = new TrieSearch()
+			this._tries[language].addFromObject(this._data[language])
 		}
-		return result
+		const results = this._tries[language].search(prefix)
+		const matches = results.map((result) => result._key_)
+		return matches
 	}
 
 	private _load() {
