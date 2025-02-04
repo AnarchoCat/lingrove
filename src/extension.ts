@@ -3,7 +3,7 @@ import { register } from '@/catScratchEditor'
 import { register as register1 } from '@/wordNotesEditor'
 import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
-import { selectLanguage } from './commands/selectLanguage'
+import { languageStatus, selectLanguage } from './commands/selectLanguage'
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposable = vscode.commands.registerCommand('mmimy.hello', () => {
@@ -33,6 +33,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('mmimy.selectLanguage', selectLanguage),
 	)
+
+	context.subscriptions.push(languageStatus())
 }
 
 export function deactivate() {}

@@ -1,3 +1,4 @@
+import { getLanguage } from '@/utils'
 import * as vscode from 'vscode'
 export async function selectLanguage() {
 	const config = vscode.workspace.getConfiguration('mmimy')
@@ -21,4 +22,20 @@ export async function selectLanguage() {
 	} else {
 		vscode.window.showInformationMessage('No language selected.')
 	}
+}
+
+export function languageStatus() {
+	const statusbarItem = vscode.window.createStatusBarItem(
+		vscode.StatusBarAlignment.Right,
+		1,
+	)
+	vscode.workspace.onDidChangeConfiguration((e) => {
+		if (e.affectsConfiguration('mmimy.language')) {
+			statusbarItem.text = getLanguage()
+		}
+	})
+	statusbarItem.text = getLanguage()
+	statusbarItem.command = 'mmimy.selectLanguage'
+	statusbarItem.show()
+	return statusbarItem
 }
