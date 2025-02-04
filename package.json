@@ -10,6 +10,21 @@
 	"publisher": "AnarchoCat",
 	"activationEvents": [],
 	"contributes": {
+		"configuration": {
+			"title": "Mmimy Settings",
+			"properties": {
+				"mmimy.language": {
+					"type": "string",
+					"default": "en",
+					"enum": [
+						"en",
+						"vi",
+						"es"
+					],
+					"description": "Select a language."
+				}
+			}
+		},
 		"commands": [
 			{
 				"command": "mmimy.hello",
@@ -18,6 +33,10 @@
 			{
 				"command": "mmimy.addToDictionary",
 				"title": "Add to Dictionary"
+			},
+			{
+				"command": "mmimy.selectLanguage",
+				"title": "Select language"
 			}
 		],
 		"customEditors": [
