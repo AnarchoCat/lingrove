@@ -2,8 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
+import { getLanguage } from '@/utils'
 export class Dictionary implements vscode.Disposable {
-	static defaultLanguage: string = 'en'
 	_path: string
 	_data: {
 		[language: string]: Record<string, string>
@@ -24,11 +24,9 @@ export class Dictionary implements vscode.Disposable {
 		this._save()
 	}
 
-	public record(word: string, definition: string, language?: string) {
+	public record(word: string, definition: string) {
 		if (word) {
-			if (language === undefined) {
-				language = Dictionary.defaultLanguage
-			}
+			const language = getLanguage()
 			if (!(language in this._data)) {
 				this._data[language] = {}
 			}
@@ -48,21 +46,16 @@ export class Dictionary implements vscode.Disposable {
 		}
 	}
 
-	public query(word: string, language?: string) {
-		if (language === undefined) {
-			language = Dictionary.defaultLanguage
-		}
-		if (!(language in this._data)) {
+	public query(word: string) {
+		const language = getLanguage()
+		if (this._data[language] === undefined) {
 			return undefined
 		}
 		return this._data[language][word]
 	}
 
-	public search(prefix: string, language?: string): string[] {
-		if (language === undefined) {
-			language = Dictionary.defaultLanguage
-		}
-
+	public search(prefix: string): string[] {
+		const language = getLanguage()
 		if (!(language in this._data)) {
 			return []
 		}

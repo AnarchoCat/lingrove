@@ -30,3 +30,10 @@ export function renderTemplate(template: string, data: Record<string, string>) {
 		return data[key.trim()] || ''
 	})
 }
+
+export function getLanguage(): string {
+	const language = vscode.workspace
+		.getConfiguration('mmimy')
+		.get<string>('language')
+	return language ?? 'en'
+}
