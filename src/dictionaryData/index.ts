@@ -42,6 +42,22 @@ export class Dictionary implements vscode.Disposable {
 		return this._data[language][word]
 	}
 
+	public search(prefix: string, language?: string): string[] {
+		if (language === undefined) {
+			language = Dictionary.defaultLanguage
+		}
+		const result: string[] = []
+		if (!(language in this._data)) {
+			return result
+		}
+		for (const w in this._data[language]) {
+			if (w.startsWith(prefix)) {
+				result.push(w)
+			}
+		}
+		return result
+	}
+
 	private _load() {
 		if (fs.existsSync(this._path)) {
 			return JSON.parse(fs.readFileSync(this._path, 'utf-8'))

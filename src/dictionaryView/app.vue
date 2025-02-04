@@ -33,6 +33,4 @@ window.addEventListener('message', (e) => {
 	word.value = e.data.word
 	note.value = e.data.note
 })
-const html = document.querySelector('html')
-console.log(html?.style)
 </script>

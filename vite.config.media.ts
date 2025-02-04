@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
 				input: {
 					catScratchEditor: '@/catScratchEditor/main.ts',
 					dictionaryView: '@/dictionaryView/main.ts',
+					searchView: '@/searchView/main.ts',
 				},
 				output: {
 					entryFileNames: '[name].js',

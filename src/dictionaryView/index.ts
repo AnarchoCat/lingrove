@@ -9,9 +9,9 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 	public static currentInstance?: DictionaryViewProvider
 
 	private _view?: vscode.WebviewView
-	private _selectedText: string = ''
+	private _word: string = ''
 	private readonly _context: vscode.ExtensionContext
-	private _dictionary: Dictionary
+	public dictionary: Dictionary
 
 	constructor(context: vscode.ExtensionContext) {
 		DictionaryViewProvider.currentInstance = this
@@ -21,8 +21,8 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 			context.globalStorageUri.fsPath,
 			'dictionary.json',
 		)
-		this._dictionary = new Dictionary(dictionaryFilePath)
-		context.subscriptions.push(this._dictionary)
+		this.dictionary = new Dictionary(dictionaryFilePath)
+		context.subscriptions.push(this.dictionary)
 	}
 
 	public resolveWebviewView(webviewView: vscode.WebviewView) {
@@ -52,16 +52,16 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 		)
 
 		vscode.window.onDidChangeActiveTextEditor(() => {
-			this._dictionary.dispose()
+			this.dictionary.dispose()
 		})
 
 		webviewView.onDidDispose(() => {
-			this._dictionary.dispose()
+			this.dictionary.dispose()
 		})
 	}
 
-	public setSelectedText(selectedText: string) {
-		this._selectedText = selectedText
+	public setWord(word: string) {
+		this._word = word
 		this._updateWebviewContent()
 	}
 
@@ -69,16 +69,16 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 		if (!this._view) {
 			return
 		}
-		const note = this._dictionary.query(this._selectedText)
+		const note = this.dictionary.query(this._word)
 		this._view.webview.postMessage({
-			word: this._selectedText,
+			word: this._word,
 			note: note,
 		})
 	}
 
 	private _saveNote(text: string, note: string) {
 		if (text) {
-			this._dictionary.record(text, note)
+			this.dictionary.record(text, note)
 			vscode.window.showInformationMessage(`Saved note for "${text}".`)
 		}
 	}

@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import { register } from '@/catScratchEditor'
 import { register as register1 } from '@/wordNotesEditor'
 import { DictionaryViewProvider } from './dictionaryView'
+import { SearchViewProvider } from './searchView'
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposable = vscode.commands.registerCommand('mmimy.hello', () => {
@@ -28,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showErrorMessage('No text selected.')
 				return
 			}
-			DictionaryViewProvider.currentInstance?.setSelectedText(selectedText)
+			DictionaryViewProvider.currentInstance?.setWord(selectedText)
 		},
 	)
 
@@ -37,6 +38,14 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.registerWebviewViewProvider(
 			DictionaryViewProvider.viewType,
 			dictionaryViewProvider,
+		),
+	)
+
+	const searchViewProvider = new SearchViewProvider(context)
+	context.subscriptions.push(
+		vscode.window.registerWebviewViewProvider(
+			SearchViewProvider.viewType,
+			searchViewProvider,
 		),
 	)
 

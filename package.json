@@ -47,6 +47,12 @@
 					"id": "mmimy.dictionaryView",
 					"title": "Dictionary View",
 					"name": "Dictionary"
+				},
+				{
+					"type": "webview",
+					"id": "mmimy.searchView",
+					"title": "Search View",
+					"name": "Search"
 				}
 			]
 		}
@@ -88,6 +94,7 @@
 		"@eslint/js": "^9.19.0",
 		"@tailwindcss/postcss": "^4.0.0",
 		"@types/node": "^22.12.0",
+		"@types/vscode-webview": "^1.57.5",
 		"@types/vscode": "^1.96.0",
 		"@vitejs/plugin-vue": "^5.2.1",
 		"@vscode/test-cli": "^0.0.10",
@@ -106,7 +113,6 @@
 		"vsce": "^2.15.0"
 	},
 	"dependencies": {
-		"@types/vscode-webview": "^1.57.5",
 		"vue": "^3.5.13"
 	}
 }
