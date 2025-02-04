@@ -50,6 +50,14 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 			null,
 			[],
 		)
+
+		vscode.window.onDidChangeActiveTextEditor(() => {
+			this._dictionary.dispose()
+		})
+
+		webviewView.onDidDispose(() => {
+			this._dictionary.dispose()
+		})
 	}
 
 	public setSelectedText(selectedText: string) {
