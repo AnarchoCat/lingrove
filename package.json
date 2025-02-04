@@ -31,10 +31,6 @@
 				"title": "Hello World"
 			},
 			{
-				"command": "mmimy.addToDictionary",
-				"title": "Add to Dictionary"
-			},
-			{
 				"command": "mmimy.selectLanguage",
 				"title": "Select language"
 			}

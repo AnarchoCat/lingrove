@@ -14,26 +14,6 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(register(context))
 	context.subscriptions.push(register1(context))
 
-	const addToDictionaryCommand = vscode.commands.registerCommand(
-		'mmimy.addToDictionary',
-		() => {
-			const editor = vscode.window.activeTextEditor
-			if (!editor) {
-				vscode.window.showErrorMessage('No active editor found.')
-				return
-			}
-
-			const selection = editor.selection
-			const selectedText = editor.document.getText(selection).trim()
-
-			if (!selectedText) {
-				vscode.window.showErrorMessage('No text selected.')
-				return
-			}
-			DictionaryViewProvider.currentInstance?.setWord(selectedText)
-		},
-	)
-
 	const dictionaryViewProvider = new DictionaryViewProvider(context)
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(
@@ -50,17 +30,6 @@ export function activate(context: vscode.ExtensionContext) {
 		),
 	)
 
-	const selectListener = vscode.window.onDidChangeTextEditorSelection((e) => {
-		const editor = e.textEditor
-		const selection = editor.selection
-
-		// Check if there is a selection (not just a cursor position)
-		if (!selection.isEmpty) {
-			vscode.commands.executeCommand('mmimy.addToDictionary')
-		}
-	})
-	context.subscriptions.push(selectListener)
-	context.subscriptions.push(addToDictionaryCommand)
 	context.subscriptions.push(
 		vscode.commands.registerCommand('mmimy.selectLanguage', selectLanguage),
 	)
