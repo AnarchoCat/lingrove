@@ -21,6 +21,11 @@
 						"vi",
 						"es"
 					],
+					"enumDescriptions": [
+						"English",
+						"Vietnamese",
+						"Spanish"
+					],
 					"description": "Select a language."
 				}
 			}
