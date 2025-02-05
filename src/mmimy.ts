@@ -4,7 +4,7 @@ import { SearchViewProvider } from './searchView'
 import selectLanguage from './commands/selectLanguage'
 import changeTextEditorSelectionListener from './listeners/changeTextEditorSelectionListener'
 import changeActiveTextEditorListener from './listeners/changeActiveTextEditorListener'
-import { Dictionary } from './dictionaryData'
+import { Dictionary } from '@/dictionary'
 import path from 'path'
 export default class Mmimy {
 	public readonly context: vscode.ExtensionContext
