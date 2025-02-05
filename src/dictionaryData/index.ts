@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
-import { getLanguage } from '@/utils'
+import { Mmimy } from '@/extension'
 export class Dictionary implements vscode.Disposable {
 	_context: vscode.ExtensionContext
 	_path: string
@@ -28,7 +28,7 @@ export class Dictionary implements vscode.Disposable {
 
 	public record(word: string, definition: string) {
 		if (word) {
-			const language = getLanguage()
+			const language = Mmimy.getInstance().language
 			if (!(language in this._data)) {
 				this._data[language] = {}
 			}
@@ -49,7 +49,7 @@ export class Dictionary implements vscode.Disposable {
 	}
 
 	public query(word: string) {
-		const language = getLanguage()
+		const language = Mmimy.getInstance().language
 		if (this._data[language] === undefined) {
 			return undefined
 		}
@@ -57,7 +57,7 @@ export class Dictionary implements vscode.Disposable {
 	}
 
 	public search(prefix: string): string[] {
-		const language = getLanguage()
+		const language = Mmimy.getInstance().language
 		if (!(language in this._data)) {
 			return []
 		}

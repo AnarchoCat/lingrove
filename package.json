@@ -13,7 +13,7 @@
 		"configuration": {
 			"title": "Mmimy Settings",
 			"properties": {
-				"mmimy.language": {
+				"mmimy.defaultLanguage": {
 					"type": "string",
 					"default": "en",
 					"enum": [

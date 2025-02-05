@@ -1,7 +1,6 @@
-import { getLanguage } from '@/utils'
+import { Mmimy } from '@/extension'
 import * as vscode from 'vscode'
-export async function selectLanguage() {
-	const config = vscode.workspace.getConfiguration('mmimy')
+export default async function selectLanguage() {
 	// Define the options
 	const options: Record<string, string> = {
 		English: 'en',
@@ -17,32 +16,10 @@ export async function selectLanguage() {
 			ignoreFocusOut: true,
 		},
 	)
-
 	if (selectedOption) {
-		// Update the setting with the selected option
-		await config.update(
-			'language',
-			options[selectedOption],
-			vscode.ConfigurationTarget.Global,
-		)
 		vscode.window.showInformationMessage(`Language set to: ${selectedOption}`)
+		Mmimy.getInstance().language = options[selectedOption]
 	} else {
 		vscode.window.showInformationMessage('No language selected.')
 	}
-}
-
-export function languageStatus() {
-	const statusbarItem = vscode.window.createStatusBarItem(
-		vscode.StatusBarAlignment.Right,
-		1,
-	)
-	vscode.workspace.onDidChangeConfiguration((e) => {
-		if (e.affectsConfiguration('mmimy.language')) {
-			statusbarItem.text = getLanguage()
-		}
-	})
-	statusbarItem.text = getLanguage()
-	statusbarItem.command = 'mmimy.selectLanguage'
-	statusbarItem.show()
-	return statusbarItem
 }
