@@ -1,13 +1,11 @@
 <template>
-	<div class="flex flex-col max-h-full gap-2">
-		<div>
-			<input
-				v-model="prefix"
-				type="text"
-				class="text-input-foreground bg-input-background placeholder:text-input-placeholderForeground border-none focus:border-focusBorder px-2 py-1"
-				@input="handleInput"
-			/>
-		</div>
+	<div class="flex flex-col max-h-full gap-4 px-2 py-4">
+		<input
+			v-model="prefix"
+			type="text"
+			class="block text-input-foreground bg-input-background placeholder:text-input-placeholderForeground border-none px-2 py-1"
+			@input="handleInput"
+		/>
 		<ul class="p-0 m-0 grow overflow-auto">
 			<li
 				v-for="(word, index) in matches"

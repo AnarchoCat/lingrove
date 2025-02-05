@@ -1601,3 +1601,7 @@
 		--vscode-git-blame\.editorDecorationForeground
 	);
 }
+
+:root {
+	@apply text-ui font-ui;
+}

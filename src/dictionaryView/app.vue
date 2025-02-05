@@ -1,15 +1,19 @@
 <template>
-	<div class="flex flex-col justify-center items-center gap-2 py-4">
-		<p class="m-0">{{ word.length < 1 ? 'Nothing selected' : word }}</p>
+	<div class="flex flex-col gap-4 py-4 px-2">
+		<input
+			v-model="word"
+			type="text"
+			class="block border-none bg-input-background text-input-foreground px-2 py-1 placeholder:text-input-placeholderForeground"
+		/>
 		<textarea
 			id="note"
 			v-model="note"
-			class="text-input-foreground bg-input-background placeholder:text-input-placeholderForeground w-full"
+			class="border-none h-32 px-2 py-1 text-input-foreground bg-input-background placeholder:text-input-placeholderForeground"
 		></textarea>
 		<button
 			id="saveButton"
 			type="button"
-			class="text-button-foreground bg-button-background border border-transparent rounded-xs hover:bg-button-hoverBackground w-full max-w-90 cursor-pointer py-1"
+			class="text-button-foreground bg-button-background border border-transparent rounded-xs hover:bg-button-hoverBackground cursor-pointer py-1 px-2"
 			@click="save"
 		>
 			Save
