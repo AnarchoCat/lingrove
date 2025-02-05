@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { DictionaryViewProvider } from '@/dictionaryView'
 import { SearchViewProvider } from '@/searchView'
-export default vscode.window.onDidChangeTextEditorSelection((e) => {
+export default (e: vscode.TextEditorSelectionChangeEvent) => {
 	const editor = e.textEditor
 	const selection = editor.selection
 	if (!selection.isEmpty) {
@@ -12,4 +12,4 @@ export default vscode.window.onDidChangeTextEditorSelection((e) => {
 		DictionaryViewProvider.getInstance().setWord(selectedText)
 		SearchViewProvider.getInstance().search(selectedText)
 	}
-})
+}

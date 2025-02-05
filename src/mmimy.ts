@@ -2,7 +2,8 @@ import * as vscode from 'vscode'
 import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
 import selectLanguage from './commands/selectLanguage'
-import selectListener from './listeners/selectListener'
+import changeTextEditorSelectionListener from './listeners/changeTextEditorSelectionListener'
+import changeActiveTextEditorListener from './listeners/changeActiveTextEditorListener'
 import { Dictionary } from './dictionaryData'
 import path from 'path'
 export default class Mmimy {
@@ -81,10 +82,14 @@ export default class Mmimy {
 	}
 
 	private registerListeners() {
-		this.context.subscriptions.push(selectListener)
-		vscode.window.onDidChangeActiveTextEditor(() => {
-			this.dictionary.dispose()
-		})
+		this.context.subscriptions.push(
+			vscode.window.onDidChangeTextEditorSelection(
+				changeTextEditorSelectionListener,
+			),
+		)
+		this.context.subscriptions.push(
+			vscode.window.onDidChangeActiveTextEditor(changeActiveTextEditorListener),
+		)
 	}
 
 	private registerStatusBarItems() {
