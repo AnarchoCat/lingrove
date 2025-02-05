@@ -1,8 +1,9 @@
 import * as vscode from 'vscode'
 import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
-import { languageStatus, selectLanguage } from './commands/selectLanguage'
+import { languageStatus } from './commands/selectLanguage'
 import { selectListener } from './listeners/selectListener'
+import { registerCommands } from './commands'
 
 export function activate(context: vscode.ExtensionContext) {
 	const dictionaryViewProvider = new DictionaryViewProvider(context)
@@ -21,12 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
 		),
 	)
 
+	registerCommands(context)
 	context.subscriptions.push(selectListener)
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('mmimy.selectLanguage', selectLanguage),
-	)
-
 	context.subscriptions.push(languageStatus())
 }
 
