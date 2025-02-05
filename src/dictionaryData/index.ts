@@ -60,7 +60,7 @@ export class Dictionary implements vscode.Disposable {
 			return []
 		}
 		if (this._tries[language] === undefined) {
-			this._tries[language] = new TrieSearch()
+			this._tries[language] = new TrieSearch([], { splitOnRegEx: false })
 			this._tries[language].addFromObject(this._data[language])
 		}
 		const results = this._tries[language].search(prefix)
