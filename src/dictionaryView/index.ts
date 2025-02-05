@@ -47,6 +47,9 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 					case 'saveNote':
 						this.saveNote(message.text, message.note)
 						return
+					case 'saveDictionary':
+						vscode.commands.executeCommand('mmimy.saveDictionary')
+						return
 				}
 			},
 			null,

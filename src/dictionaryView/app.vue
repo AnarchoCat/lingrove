@@ -11,12 +11,18 @@
 			class="border-none h-32 px-2 py-1 text-input-foreground bg-input-background placeholder:text-input-placeholderForeground"
 		></textarea>
 		<button
-			id="saveButton"
 			type="button"
 			class="text-button-foreground bg-button-background border border-transparent rounded-xs hover:bg-button-hoverBackground cursor-pointer py-1 px-2"
 			@click="save"
 		>
 			Save
+		</button>
+		<button
+			type="button"
+			class="text-button-secondaryForeground bg-button-secondaryBackground border border-transparent rounded-xs hover:bg-button-secondaryHoverBackground cursor-pointer py-1 px-2"
+			@click="saveDictionary"
+		>
+			Save Dictionary
 		</button>
 	</div>
 </template>
@@ -31,6 +37,11 @@ function save() {
 		command: 'saveNote',
 		text: word.value,
 		note: note.value,
+	})
+}
+function saveDictionary() {
+	vscode.postMessage({
+		command: 'saveDictionary',
 	})
 }
 window.addEventListener('message', (e) => {
