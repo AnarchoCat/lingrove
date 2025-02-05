@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
-import { Mmimy } from '@/extension'
+import Mmimy from '@/mmimy'
 export class Dictionary implements vscode.Disposable {
 	_context: vscode.ExtensionContext
 	_path: string

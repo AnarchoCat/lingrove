@@ -1,4 +1,4 @@
-import { Mmimy } from '@/extension'
+import Mmimy from '@/mmimy'
 import * as vscode from 'vscode'
 export default async function selectLanguage() {
 	// Define the options
