@@ -4,41 +4,47 @@ import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
 import Mmimy from '@/mmimy'
 export class Dictionary implements vscode.Disposable {
-	_path: string
-	_data: {
+	// Path to the dictionary file
+	private path: string
+	// Dictionary data (JSON object)
+	private data: {
 		[language: string]: Record<string, string>
 	}
-	_tries: {
+	// Tries for each language
+	private tries: {
 		[language: string]: TrieSearch<{
 			_key_: string
 			value: string
 		}>
 	}
 	constructor(filePath: string) {
-		this._path = filePath
-		this._data = this._load()
-		this._tries = {}
+		this.path = filePath
+		this.data = this.load()
+		this.tries = {}
 	}
 
 	public dispose() {
-		this._save()
+		this.save()
 	}
 
 	public record(word: string, definition: string) {
+		word = word.trim()
+		definition = definition.trim()
 		if (word) {
 			const language = Mmimy.getInstance().language
-			if (!(language in this._data)) {
-				this._data[language] = {}
+			if (!(language in this.data)) {
+				this.data[language] = {}
 			}
-			if (word in this._data[language] && definition.length < 1) {
-				delete this._data[language][word]
-				if (language in this._tries) {
-					this._tries[language].remove(word)
+			// If word exists and definition is empty, delete the word
+			if (word in this.data[language] && !definition) {
+				delete this.data[language][word]
+				if (language in this.tries) {
+					this.tries[language].remove(word)
 				}
 			} else {
-				this._data[language][word] = definition
-				if (language in this._tries) {
-					this._tries[language].addFromObject({
+				this.data[language][word] = definition
+				if (language in this.tries) {
+					this.tries[language].addFromObject({
 						[word]: definition,
 					})
 				}
@@ -46,40 +52,41 @@ export class Dictionary implements vscode.Disposable {
 		}
 	}
 
-	public query(word: string) {
+	public query(word: string): string | undefined {
 		const language = Mmimy.getInstance().language
-		if (this._data[language] === undefined) {
+		if (this.data[language] === undefined) {
 			return undefined
 		}
-		return this._data[language][word]
+		return this.data[language][word]
 	}
 
 	public search(prefix: string): string[] {
 		const language = Mmimy.getInstance().language
-		if (!(language in this._data)) {
+		if (this.data[language] === undefined) {
 			return []
 		}
-		if (this._tries[language] === undefined) {
-			this._tries[language] = new TrieSearch([], { splitOnRegEx: false })
-			this._tries[language].addFromObject(this._data[language])
+		if (this.tries[language] === undefined) {
+			this.tries[language] = new TrieSearch([], { splitOnRegEx: false })
+			this.tries[language].addFromObject(this.data[language])
 		}
-		const results = this._tries[language].search(prefix)
+		const results = this.tries[language].search(prefix)
 		const matches = results.map((result) => result._key_)
 		return matches
 	}
 
-	private _load() {
-		if (fs.existsSync(this._path)) {
-			return JSON.parse(fs.readFileSync(this._path, 'utf-8'))
+	private load(): typeof this.data {
+		// If the file exists, load it. Otherwise, return an empty object.
+		if (fs.existsSync(this.path)) {
+			return JSON.parse(fs.readFileSync(this.path, 'utf-8'))
 		}
 		return {}
 	}
 
-	private _save() {
-		const dir = path.dirname(this._path)
+	public save() {
+		const dir = path.dirname(this.path)
 		if (!fs.existsSync(dir)) {
 			fs.mkdirSync(dir, { recursive: true })
 		}
-		fs.writeFileSync(this._path, JSON.stringify(this._data, null, 2))
+		fs.writeFileSync(this.path, JSON.stringify(this.data, null, 2))
 	}
 }
