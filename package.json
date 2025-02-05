@@ -44,6 +44,10 @@
 			{
 				"command": "mmimy.selectLanguage",
 				"title": "Select language"
+			},
+			{
+				"command": "mmimy.saveDictionary",
+				"title": "Save dictionary"
 			}
 		],
 		"viewsContainers": {

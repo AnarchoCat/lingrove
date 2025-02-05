@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
 import selectLanguage from './commands/selectLanguage'
+import saveDictionary from './commands/saveDictionary'
 import changeTextEditorSelectionListener from './listeners/changeTextEditorSelectionListener'
 import changeActiveTextEditorListener from './listeners/changeActiveTextEditorListener'
 import { Dictionary } from '@/dictionary'
@@ -46,6 +47,9 @@ export default class Mmimy {
 	private registerCommands(): void {
 		this.context.subscriptions.push(
 			vscode.commands.registerCommand('mmimy.selectLanguage', selectLanguage),
+		)
+		this.context.subscriptions.push(
+			vscode.commands.registerCommand('mmimy.saveDictionary', saveDictionary),
 		)
 	}
 
