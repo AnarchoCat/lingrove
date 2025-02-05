@@ -1,8 +1,6 @@
 import * as vscode from 'vscode'
-import * as path from 'path'
 import { getNonce, getMediaUri, renderTemplate, cspMeta } from '@/utils'
 import html from './index.html?raw'
-import { Dictionary } from '@/dictionaryData'
 import Mmimy from '@/mmimy'
 
 export class DictionaryViewProvider implements vscode.WebviewViewProvider {
