@@ -11,7 +11,6 @@ export default defineConfig(({ mode }) => {
 			outDir: 'dist/media',
 			rollupOptions: {
 				input: {
-					catScratchEditor: '@/catScratchEditor/main.ts',
 					dictionaryView: '@/dictionaryView/main.ts',
 					searchView: '@/searchView/main.ts',
 				},

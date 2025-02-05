@@ -32,32 +32,8 @@
 		},
 		"commands": [
 			{
-				"command": "mmimy.hello",
-				"title": "Hello World"
-			},
-			{
 				"command": "mmimy.selectLanguage",
 				"title": "Select language"
-			}
-		],
-		"customEditors": [
-			{
-				"viewType": "mmimy.catScratch",
-				"displayName": "catScratch",
-				"selector": [
-					{
-						"filenamePattern": "*.mmimy"
-					}
-				]
-			},
-			{
-				"viewType": "wordNotesEditor",
-				"displayName": "Word Notes Editor",
-				"selector": [
-					{
-						"filenamePattern": "*.mtxt"
-					}
-				]
 			}
 		],
 		"viewsContainers": {
