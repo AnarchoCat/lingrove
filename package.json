@@ -26,6 +26,11 @@
 						"Vietnamese",
 						"Spanish"
 					],
+					"enumDescriptions": [
+						"English",
+						"Vietnamese",
+						"Spanish"
+					],
 					"description": "Select a language."
 				},
 				"mmimy.dictionaryFileName": {

@@ -1,0 +1,5 @@
+{
+	"enum": ["en", "vi", "es"],
+	"enumItemLabels": ["English", "Vietnamese", "Spanish"],
+	"enumDescriptions": ["English", "Vietnamese", "Spanish"]
+}
