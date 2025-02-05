@@ -21,7 +21,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 			context.globalStorageUri.fsPath,
 			'dictionary.json',
 		)
-		this.dictionary = new Dictionary(dictionaryFilePath)
+		this.dictionary = new Dictionary(this._context, dictionaryFilePath)
 		context.subscriptions.push(this.dictionary)
 	}
 

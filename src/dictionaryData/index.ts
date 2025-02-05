@@ -4,6 +4,7 @@ import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
 import { getLanguage } from '@/utils'
 export class Dictionary implements vscode.Disposable {
+	_context: vscode.ExtensionContext
 	_path: string
 	_data: {
 		[language: string]: Record<string, string>
@@ -14,7 +15,8 @@ export class Dictionary implements vscode.Disposable {
 			value: string
 		}>
 	}
-	constructor(filePath: string) {
+	constructor(context: vscode.ExtensionContext, filePath: string) {
+		this._context = context
 		this._path = filePath
 		this._data = this._load()
 		this._tries = {}
