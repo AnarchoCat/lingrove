@@ -12,7 +12,6 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 
 	private view?: vscode.WebviewView
 	private word: string = ''
-	public dictionary: Dictionary
 
 	public static getInstance(extension?: Mmimy) {
 		if (!DictionaryViewProvider.instance) {
@@ -28,13 +27,6 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 
 	private constructor(extension: Mmimy) {
 		this.extension = extension
-		// Initialize the dictionary file path
-		const dictionaryFilePath = path.join(
-			this.extension.context.globalStorageUri.fsPath,
-			'dictionary.json',
-		)
-		this.dictionary = new Dictionary(this.extension.context, dictionaryFilePath)
-		this.extension.context.subscriptions.push(this.dictionary)
 	}
 
 	public resolveWebviewView(webviewView: vscode.WebviewView) {
@@ -63,12 +55,8 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 			[],
 		)
 
-		vscode.window.onDidChangeActiveTextEditor(() => {
-			this.dictionary.dispose()
-		})
-
 		webviewView.onDidDispose(() => {
-			this.dictionary.dispose()
+			this.extension.dictionary.dispose()
 		})
 	}
 
@@ -81,7 +69,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 		if (!this.view) {
 			return
 		}
-		const definition = this.dictionary.query(this.word)
+		const definition = this.extension.dictionary.query(this.word)
 		this.view.webview.postMessage({
 			word: this.word,
 			note: definition,
@@ -90,7 +78,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 
 	private saveNote(word: string, definition: string) {
 		if (word) {
-			this.dictionary.record(word, definition)
+			this.extension.dictionary.record(word, definition)
 			vscode.window.showInformationMessage(`Saved note for "${word}".`)
 		}
 	}

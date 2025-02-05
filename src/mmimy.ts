@@ -3,13 +3,22 @@ import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
 import selectLanguage from './commands/selectLanguage'
 import selectListener from './listeners/selectListener'
+import { Dictionary } from './dictionaryData'
+import path from 'path'
 export default class Mmimy {
 	public readonly context: vscode.ExtensionContext
 	private static instance?: Mmimy
 	private languageStatus: vscode.StatusBarItem
+	public readonly dictionary: Dictionary
 
 	private constructor(context: vscode.ExtensionContext) {
 		this.context = context
+		const dictionaryFilePath = path.join(
+			this.context.globalStorageUri.fsPath,
+			'dictionary.json',
+		)
+		this.dictionary = new Dictionary(dictionaryFilePath)
+		this.context.subscriptions.push(this.dictionary)
 		this.languageStatus = vscode.window.createStatusBarItem(
 			vscode.StatusBarAlignment.Right,
 			1,
@@ -60,7 +69,9 @@ export default class Mmimy {
 				dictionaryViewProvider,
 			),
 		)
-		const searchViewProvider = new SearchViewProvider(this.context)
+		const searchViewProvider = SearchViewProvider.getInstance(
+			Mmimy.getInstance(),
+		)
 		this.context.subscriptions.push(
 			vscode.window.registerWebviewViewProvider(
 				SearchViewProvider.viewType,
@@ -71,6 +82,9 @@ export default class Mmimy {
 
 	private registerListeners() {
 		this.context.subscriptions.push(selectListener)
+		vscode.window.onDidChangeActiveTextEditor(() => {
+			this.dictionary.dispose()
+		})
 	}
 
 	private registerStatusBarItems() {

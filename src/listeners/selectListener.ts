@@ -10,6 +10,6 @@ export default vscode.window.onDidChangeTextEditorSelection((e) => {
 			return
 		}
 		DictionaryViewProvider.getInstance().setWord(selectedText)
-		SearchViewProvider.currentInstance?.search(selectedText)
+		SearchViewProvider.getInstance().search(selectedText)
 	}
 })

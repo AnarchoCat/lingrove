@@ -4,7 +4,6 @@ import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
 import Mmimy from '@/mmimy'
 export class Dictionary implements vscode.Disposable {
-	_context: vscode.ExtensionContext
 	_path: string
 	_data: {
 		[language: string]: Record<string, string>
@@ -15,8 +14,7 @@ export class Dictionary implements vscode.Disposable {
 			value: string
 		}>
 	}
-	constructor(context: vscode.ExtensionContext, filePath: string) {
-		this._context = context
+	constructor(filePath: string) {
 		this._path = filePath
 		this._data = this._load()
 		this._tries = {}

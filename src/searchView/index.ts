@@ -2,36 +2,44 @@ import * as vscode from 'vscode'
 import html from './index.html?raw'
 import { getMediaUri, renderTemplate } from '@/utils'
 import { DictionaryViewProvider } from '@/dictionaryView'
+import Mmimy from '@/mmimy'
 
 export class SearchViewProvider implements vscode.WebviewViewProvider {
-	static viewType = 'mmimy.searchView'
-	static currentInstance?: SearchViewProvider
-	private _view?: vscode.WebviewView
-	private _context: vscode.ExtensionContext
-	constructor(context: vscode.ExtensionContext) {
-		this._context = context
-		SearchViewProvider.currentInstance = this
+	public static readonly viewType = 'mmimy.searchView'
+	private static instance?: SearchViewProvider
+	private readonly extension: Mmimy
+	private view?: vscode.WebviewView
+
+	private constructor(extension: Mmimy) {
+		this.extension = extension
 	}
 
-	public resolveWebviewView(
-		webviewView: vscode.WebviewView,
-	): Thenable<void> | void {
-		this._view = webviewView
-		this._view.webview.options = {
-			...this._view.webview.options,
+	public static getInstance(extension?: Mmimy) {
+		if (!SearchViewProvider.instance) {
+			if (!extension) {
+				throw new Error(
+					'The instance of SearchViewProvider has not been initialized. The extension argument must be provided.',
+				)
+			}
+			SearchViewProvider.instance = new SearchViewProvider(extension)
+		}
+		return SearchViewProvider.instance
+	}
+
+	public resolveWebviewView(webviewView: vscode.WebviewView) {
+		this.view = webviewView
+		this.view.webview.options = {
+			...this.view.webview.options,
 			enableScripts: true,
 		}
-		this._view.webview.html = this._getHtmlForWebview()
-		this._view.webview.onDidReceiveMessage((e) => {
-			const dictionary = DictionaryViewProvider.getInstance().dictionary
+		this.view.webview.html = this.getHtmlForWebview()
+		this.view.webview.onDidReceiveMessage((e) => {
+			const dictionary = this.extension.dictionary
 			switch (e.command) {
 				case 'searchByPrefix':
-					if (dictionary) {
-						const matches = dictionary.search(e.prefix)
-						this._view?.webview.postMessage({
-							matches: matches,
-						})
-					}
+					this.view?.webview.postMessage({
+						matches: dictionary.search(e.prefix),
+					})
 					break
 				case 'setWord':
 					DictionaryViewProvider.getInstance().setWord(e.word)
@@ -41,26 +49,23 @@ export class SearchViewProvider implements vscode.WebviewViewProvider {
 	}
 
 	public search(word: string) {
-		const dictionary = DictionaryViewProvider.getInstance().dictionary
-		if (dictionary) {
-			const matches = dictionary.search(word)
-			this._view?.webview.postMessage({
-				input: word,
-				matches: matches,
-			})
-		}
+		const matches = this.extension.dictionary.search(word)
+		this.view?.webview.postMessage({
+			input: word,
+			matches: matches,
+		})
 	}
 
-	private _getHtmlForWebview() {
+	private getHtmlForWebview() {
 		const data: Record<string, string> = {
 			js: getMediaUri(
-				this._view!.webview,
-				this._context.extensionUri,
+				this.view!.webview,
+				this.extension.context.extensionUri,
 				'searchView.js',
 			).toString(),
 			css: getMediaUri(
-				this._view!.webview,
-				this._context.extensionUri,
+				this.view!.webview,
+				this.extension.context.extensionUri,
 				'searchView.css',
 			).toString(),
 		}
