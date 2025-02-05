@@ -3,47 +3,59 @@ import * as path from 'path'
 import { getNonce, getMediaUri, renderTemplate, cspMeta } from '@/utils'
 import html from './index.html?raw'
 import { Dictionary } from '@/dictionaryData'
+import Mmimy from '@/mmimy'
 
 export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = 'mmimy.dictionaryView'
-	public static currentInstance?: DictionaryViewProvider
+	private static instance?: DictionaryViewProvider
+	private readonly extension: Mmimy
 
-	private _view?: vscode.WebviewView
-	private _word: string = ''
-	private readonly _context: vscode.ExtensionContext
+	private view?: vscode.WebviewView
+	private word: string = ''
 	public dictionary: Dictionary
 
-	constructor(context: vscode.ExtensionContext) {
-		DictionaryViewProvider.currentInstance = this
-		this._context = context
+	public static getInstance(extension?: Mmimy) {
+		if (!DictionaryViewProvider.instance) {
+			if (!extension) {
+				throw new Error(
+					'The instance of DictionaryViewProvider has not been initialized. The extension argument must be provided.',
+				)
+			}
+			DictionaryViewProvider.instance = new DictionaryViewProvider(extension)
+		}
+		return DictionaryViewProvider.instance
+	}
+
+	private constructor(extension: Mmimy) {
+		this.extension = extension
 		// Initialize the dictionary file path
 		const dictionaryFilePath = path.join(
-			context.globalStorageUri.fsPath,
+			this.extension.context.globalStorageUri.fsPath,
 			'dictionary.json',
 		)
-		this.dictionary = new Dictionary(this._context, dictionaryFilePath)
-		context.subscriptions.push(this.dictionary)
+		this.dictionary = new Dictionary(this.extension.context, dictionaryFilePath)
+		this.extension.context.subscriptions.push(this.dictionary)
 	}
 
 	public resolveWebviewView(webviewView: vscode.WebviewView) {
-		this._view = webviewView
+		this.view = webviewView
 
 		// Set the WebView options
 		webviewView.webview.options = {
 			enableScripts: true,
 			localResourceRoots: [
-				vscode.Uri.joinPath(this._context.extensionUri, 'dist/media'),
+				vscode.Uri.joinPath(this.extension.context.extensionUri, 'dist/media'),
 			],
 		}
 		// Set the WebView content
-		this._view!.webview.html = this._getHtmlForWebview()
+		this.view!.webview.html = this.getHtmlForWebview()
 
 		// Handle messages from the WebView
 		webviewView.webview.onDidReceiveMessage(
 			(message) => {
 				switch (message.command) {
 					case 'saveNote':
-						this._saveNote(message.text, message.note)
+						this.saveNote(message.text, message.note)
 						return
 				}
 			},
@@ -61,43 +73,43 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 	}
 
 	public setWord(word: string) {
-		this._word = word
-		this._updateWebviewContent()
+		this.word = word
+		this.updateWebviewContent()
 	}
 
-	private _updateWebviewContent() {
-		if (!this._view) {
+	private updateWebviewContent() {
+		if (!this.view) {
 			return
 		}
-		const note = this.dictionary.query(this._word)
-		this._view.webview.postMessage({
-			word: this._word,
-			note: note,
+		const definition = this.dictionary.query(this.word)
+		this.view.webview.postMessage({
+			word: this.word,
+			note: definition,
 		})
 	}
 
-	private _saveNote(text: string, note: string) {
-		if (text) {
-			this.dictionary.record(text, note)
-			vscode.window.showInformationMessage(`Saved note for "${text}".`)
+	private saveNote(word: string, definition: string) {
+		if (word) {
+			this.dictionary.record(word, definition)
+			vscode.window.showInformationMessage(`Saved note for "${word}".`)
 		}
 	}
 
-	private _getHtmlForWebview(): string {
+	private getHtmlForWebview(): string {
 		const nonce = getNonce()
 		const data: Record<string, string> = {
 			jsPath: getMediaUri(
-				this._view!.webview,
-				this._context.extensionUri,
+				this.view!.webview,
+				this.extension.context.extensionUri,
 				'dictionaryView.js',
 			).toString(),
 			cssPath: getMediaUri(
-				this._view!.webview,
-				this._context.extensionUri,
+				this.view!.webview,
+				this.extension.context.extensionUri,
 				'dictionaryView.css',
 			).toString(),
 			nonce: nonce,
-			cspMeta: cspMeta(this._view!.webview.cspSource, nonce),
+			cspMeta: cspMeta(this.view!.webview.cspSource, nonce),
 		}
 		return renderTemplate(html, data)
 	}

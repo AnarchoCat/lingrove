@@ -5,7 +5,7 @@ import selectLanguage from './commands/selectLanguage'
 import selectListener from './listeners/selectListener'
 export default class Mmimy {
 	public readonly context: vscode.ExtensionContext
-	private static instance: Mmimy
+	private static instance?: Mmimy
 	private languageStatus: vscode.StatusBarItem
 
 	private constructor(context: vscode.ExtensionContext) {
@@ -51,7 +51,9 @@ export default class Mmimy {
 	}
 
 	private registerViews() {
-		const dictionaryViewProvider = new DictionaryViewProvider(this.context)
+		const dictionaryViewProvider = DictionaryViewProvider.getInstance(
+			Mmimy.getInstance(),
+		)
 		this.context.subscriptions.push(
 			vscode.window.registerWebviewViewProvider(
 				DictionaryViewProvider.viewType,

@@ -23,7 +23,7 @@ export class SearchViewProvider implements vscode.WebviewViewProvider {
 		}
 		this._view.webview.html = this._getHtmlForWebview()
 		this._view.webview.onDidReceiveMessage((e) => {
-			const dictionary = DictionaryViewProvider.currentInstance?.dictionary
+			const dictionary = DictionaryViewProvider.getInstance().dictionary
 			switch (e.command) {
 				case 'searchByPrefix':
 					if (dictionary) {
@@ -34,14 +34,14 @@ export class SearchViewProvider implements vscode.WebviewViewProvider {
 					}
 					break
 				case 'setWord':
-					DictionaryViewProvider.currentInstance?.setWord(e.word)
+					DictionaryViewProvider.getInstance().setWord(e.word)
 					break
 			}
 		})
 	}
 
 	public search(word: string) {
-		const dictionary = DictionaryViewProvider.currentInstance?.dictionary
+		const dictionary = DictionaryViewProvider.getInstance().dictionary
 		if (dictionary) {
 			const matches = dictionary.search(word)
 			this._view?.webview.postMessage({

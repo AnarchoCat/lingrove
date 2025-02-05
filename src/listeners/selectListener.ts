@@ -9,7 +9,7 @@ export default vscode.window.onDidChangeTextEditorSelection((e) => {
 		if (!selectedText) {
 			return
 		}
-		DictionaryViewProvider.currentInstance?.setWord(selectedText)
+		DictionaryViewProvider.getInstance().setWord(selectedText)
 		SearchViewProvider.currentInstance?.search(selectedText)
 	}
 })
