@@ -27,6 +27,11 @@
 						"Spanish"
 					],
 					"description": "Select a language."
+				},
+				"mmimy.dictionaryFileName": {
+					"type": "string",
+					"default": "dictionary.json",
+					"description": "The file name (.json) of the dictionary."
 				}
 			}
 		},

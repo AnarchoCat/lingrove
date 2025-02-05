@@ -14,9 +14,13 @@ export default class Mmimy {
 
 	private constructor(context: vscode.ExtensionContext) {
 		this.context = context
+		const dictionaryFileName =
+			vscode.workspace
+				.getConfiguration('mmimy')
+				.get<string>('dictionaryFileName') ?? 'dictionary.json'
 		const dictionaryFilePath = path.join(
 			this.context.globalStorageUri.fsPath,
-			'dictionary.json',
+			dictionaryFileName,
 		)
 		this.dictionary = new Dictionary(dictionaryFilePath)
 		this.context.subscriptions.push(this.dictionary)
