@@ -60,8 +60,17 @@
 				]
 			}
 		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"icon": "assets/iconDictionary.svg",
+					"id": "dictionary",
+					"title": "Dictionary"
+				}
+			]
+		},
 		"views": {
-			"explorer": [
+			"dictionary": [
 				{
 					"type": "webview",
 					"id": "mmimy.dictionaryView",
