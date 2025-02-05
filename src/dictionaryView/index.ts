@@ -23,19 +23,6 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 		)
 		this.dictionary = new Dictionary(dictionaryFilePath)
 		context.subscriptions.push(this.dictionary)
-
-		const selectListener = vscode.window.onDidChangeTextEditorSelection((e) => {
-			const editor = e.textEditor
-			const selection = editor.selection
-			if (!selection.isEmpty) {
-				const selectedText = editor.document.getText(selection).trim()
-				if (!selectedText) {
-					return
-				}
-				DictionaryViewProvider.currentInstance?.setWord(selectedText)
-			}
-		})
-		context.subscriptions.push(selectListener)
 	}
 
 	public resolveWebviewView(webviewView: vscode.WebviewView) {

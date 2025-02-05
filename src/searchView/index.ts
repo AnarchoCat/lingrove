@@ -5,10 +5,12 @@ import { DictionaryViewProvider } from '@/dictionaryView'
 
 export class SearchViewProvider implements vscode.WebviewViewProvider {
 	static viewType = 'mmimy.searchView'
+	static currentInstance?: SearchViewProvider
 	private _view?: vscode.WebviewView
 	private _context: vscode.ExtensionContext
 	constructor(context: vscode.ExtensionContext) {
 		this._context = context
+		SearchViewProvider.currentInstance = this
 	}
 
 	public resolveWebviewView(
@@ -36,6 +38,17 @@ export class SearchViewProvider implements vscode.WebviewViewProvider {
 					break
 			}
 		})
+	}
+
+	public search(word: string) {
+		const dictionary = DictionaryViewProvider.currentInstance?.dictionary
+		if (dictionary) {
+			const matches = dictionary.search(word)
+			this._view?.webview.postMessage({
+				input: word,
+				matches: matches,
+			})
+		}
 	}
 
 	private _getHtmlForWebview() {

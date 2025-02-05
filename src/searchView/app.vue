@@ -40,5 +40,8 @@ function handleClick(word: string) {
 }
 window.addEventListener('message', (e) => {
 	matches.value = e.data.matches
+	if (e.data.input) {
+		prefix.value = e.data.input
+	}
 })
 </script>

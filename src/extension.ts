@@ -4,6 +4,7 @@ import { register as register1 } from '@/wordNotesEditor'
 import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
 import { languageStatus, selectLanguage } from './commands/selectLanguage'
+import { selectListener } from './listeners/selectListener'
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposable = vscode.commands.registerCommand('mmimy.hello', () => {
@@ -29,6 +30,8 @@ export function activate(context: vscode.ExtensionContext) {
 			searchViewProvider,
 		),
 	)
+
+	context.subscriptions.push(selectListener)
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('mmimy.selectLanguage', selectLanguage),
