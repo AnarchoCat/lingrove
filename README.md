@@ -1,3 +1,3 @@
-# mmimy README
+# Mmimy
 
-This is the README for your extension "mmimy".
+Cat Moyu Extension
