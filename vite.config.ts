@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import { readdirSync } from 'fs'
 import commonOptions from './vite.config.common'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig(({ mode }) => {
 	const srcDir = resolve(__dirname, 'src')
@@ -29,5 +30,15 @@ export default defineConfig(({ mode }) => {
 			},
 			emptyOutDir: false,
 		},
+		plugins: [
+			viteStaticCopy({
+				targets: [
+					{
+						src: 'assets/iconDictionary.svg',
+						dest: '',
+					},
+				],
+			}),
+		],
 	}
 })
