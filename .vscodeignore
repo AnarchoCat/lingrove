@@ -16,3 +16,4 @@ assets/**
 **/.vscode-test.*
 **/vite.config.*
 **/mise.toml
+**/postcss.config.*
