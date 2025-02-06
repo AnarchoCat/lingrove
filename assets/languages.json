@@ -1,5 +1,11 @@
 {
-	"enum": ["en", "vi", "es"],
-	"enumItemLabels": ["English", "Vietnamese", "Spanish"],
-	"enumDescriptions": ["English", "Vietnamese", "Spanish"]
+	"enum": ["en", "vi", "es", "pt", "fr"],
+	"enumItemLabels": [
+		"English",
+		"Tiếng Việt",
+		"Español",
+		"Português",
+		"Français"
+	],
+	"enumDescriptions": ["🇺🇸🇬🇧", "🇻🇳", "🇪🇸", "🇵🇹🇧🇷", "🇫🇷"]
 }

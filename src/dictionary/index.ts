@@ -61,9 +61,13 @@ export class Dictionary implements vscode.Disposable {
 	}
 
 	public search(prefix: string): string[] {
+		prefix = prefix.trim()
 		const language = Mmimy.getInstance().language
 		if (this.data[language] === undefined) {
 			return []
+		}
+		if (!prefix) {
+			return Object.keys(this.data[language])
 		}
 		if (this.tries[language] === undefined) {
 			this.tries[language] = new TrieSearch([], { splitOnRegEx: false })

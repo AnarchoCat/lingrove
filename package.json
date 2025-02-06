@@ -19,17 +19,23 @@
 					"enum": [
 						"en",
 						"vi",
-						"es"
+						"es",
+						"pt",
+						"fr"
 					],
 					"enumItemLabels": [
 						"English",
-						"Vietnamese",
-						"Spanish"
+						"Tiếng Việt",
+						"Español",
+						"Português",
+						"Français"
 					],
 					"enumDescriptions": [
-						"English",
-						"Vietnamese",
-						"Spanish"
+						"🇺🇸🇬🇧",
+						"🇻🇳",
+						"🇪🇸",
+						"🇵🇹🇧🇷",
+						"🇫🇷"
 					],
 					"description": "Select a language."
 				},
