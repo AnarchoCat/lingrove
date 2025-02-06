@@ -43,6 +43,27 @@
 					"type": "string",
 					"default": "dictionary.json",
 					"description": "The file name (.json) of the dictionary."
+				},
+				"mmimy.additionalLanguages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"code": {
+								"type": "string",
+								"description": "Language code (must be unique)"
+							},
+							"label": {
+								"type": "string",
+								"description": "A human-readable label for the language"
+							},
+							"description": {
+								"type": "string",
+								"description": "A human-readable description of the language"
+							}
+						},
+						"default": []
+					}
 				}
 			}
 		},
