@@ -61,6 +61,11 @@ export default class Mmimy {
 	public set language(value: string) {
 		this.context.globalState.update('language', value)
 		this.languageStatus.text = value
+		vscode.commands.executeCommand(
+			'setContext',
+			'mmimy.tratuView.show',
+			value === 'vi',
+		)
 	}
 
 	private loadConfig() {
@@ -94,6 +99,11 @@ export default class Mmimy {
 				TratuViewProvider.viewType,
 				tratuViewProvider,
 			),
+		)
+		vscode.commands.executeCommand(
+			'setContext',
+			'mmimy.tratuView.show',
+			this.language === 'vi',
 		)
 	}
 

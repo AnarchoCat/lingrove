@@ -104,7 +104,8 @@
 					"type": "webview",
 					"id": "mmimy.tratuView",
 					"title": "Tratu",
-					"name": "Tratu"
+					"name": "Tratu",
+					"when": "mmimy.tratuView.show"
 				}
 			]
 		}
