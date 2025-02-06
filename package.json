@@ -90,7 +90,7 @@
 		"build-media": "vite build --config vite.config.media.ts",
 		"build-media:watch": "vite build --config vite.config.media.ts --watch",
 		"check": "tsc --noEmit",
-		"package": "vsce package",
+		"package": "vsce package -o dist",
 		"format": "prettier . --write",
 		"lint": "eslint .",
 		"prepare": "husky",
