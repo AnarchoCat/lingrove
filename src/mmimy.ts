@@ -7,6 +7,7 @@ import changeTextEditorSelectionListener from './listeners/changeTextEditorSelec
 import changeActiveTextEditorListener from './listeners/changeActiveTextEditorListener'
 import { Dictionary } from '@/dictionary'
 import path from 'path'
+import { TratuViewProvider } from './tratu'
 export default class Mmimy {
 	public readonly context: vscode.ExtensionContext
 	private static instance?: Mmimy
@@ -85,6 +86,13 @@ export default class Mmimy {
 			vscode.window.registerWebviewViewProvider(
 				SearchViewProvider.viewType,
 				searchViewProvider,
+			),
+		)
+		const tratuViewProvider = TratuViewProvider.getInstance(Mmimy.getInstance())
+		this.context.subscriptions.push(
+			vscode.window.registerWebviewViewProvider(
+				TratuViewProvider.viewType,
+				tratuViewProvider,
 			),
 		)
 	}

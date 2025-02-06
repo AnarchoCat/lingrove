@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
 				input: {
 					dictionaryView: '@/dictionaryView/main.ts',
 					searchView: '@/searchView/main.ts',
+					tratu: '@/tratu/main.ts',
 				},
 				output: {
 					entryFileNames: '[name].js',

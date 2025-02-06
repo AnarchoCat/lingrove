@@ -99,6 +99,12 @@
 					"id": "mmimy.searchView",
 					"title": "Search View",
 					"name": "Search"
+				},
+				{
+					"type": "webview",
+					"id": "mmimy.tratuView",
+					"title": "Tratu",
+					"name": "Tratu"
 				}
 			]
 		}
@@ -160,6 +166,8 @@
 		"vsce": "^2.15.0"
 	},
 	"dependencies": {
+		"axios": "^1.7.9",
+		"cheerio": "^1.0.0",
 		"trie-search": "^2.2.0",
 		"vue": "^3.5.13"
 	}

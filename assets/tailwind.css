@@ -1605,3 +1605,6 @@
 :root {
 	@apply text-ui font-ui;
 }
+p {
+	@apply my-0;
+}
