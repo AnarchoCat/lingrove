@@ -1,7 +1,7 @@
 {
 	"name": "mmimy",
 	"displayName": "Maomao i Moyu",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"main": "dist/extension.js",
 	"engines": {
 		"node": "^23.6.0",
