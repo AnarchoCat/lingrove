@@ -67,7 +67,7 @@
 				},
 				"mmimy.tratu.python": {
 					"type": "string",
-					"default": ".venv/bin/python3",
+					"default": "python3",
 					"description": "Path to Python interpreter for LLM based translation."
 				},
 				"mmimy.tratu.translationScript": {

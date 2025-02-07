@@ -45,17 +45,13 @@ export class TratuViewProvider implements vscode.WebviewViewProvider {
 				})
 			} else if (e.command === 'translate') {
 				const config = vscode.workspace.getConfiguration('mmimy')
-				const pythonValue = config.get<string>('tratu.python')
-				const pythonInspected = config.inspect<string>('tratu.python')
+				const python = config.get<string>('tratu.python')
 				const translationScriptValue = config.get<string>(
 					'tratu.translationScript',
 				)
 				const translationScriptInspected = config.inspect<string>(
 					'tratu.translationScript',
 				)
-				const python = isSet<string>(pythonInspected)
-					? pythonValue
-					: `${this.extension.context.extensionPath}/${pythonValue}`
 				const translationScript = isSet<string>(translationScriptInspected)
 					? translationScriptValue
 					: `${this.extension.context.extensionPath}/${translationScriptValue}`
