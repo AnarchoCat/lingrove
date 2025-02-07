@@ -12,7 +12,15 @@
 		>
 			Tra Từ
 		</button>
-		<div class="flex flex-col gap-2">
+		<button
+			type="button"
+			class="px-2 py-1 bg-button-secondaryBackground text-button-secondaryForeground hover:bg-button-secondaryHoverBackground border border-transparent cursor-pointer"
+			@click="handleTranslate"
+		>
+			Dịch
+		</button>
+		<div v-if="typeof data === 'string'">{{ data }}</div>
+		<div v-if="typeof data === 'object'" class="flex flex-col gap-2">
 			<div
 				v-for="(pos, index) in data"
 				:key="index"
@@ -44,11 +52,17 @@ import { ref } from 'vue'
 import type { PartOfSpeech } from './tratu'
 const word = ref<string>()
 const vscode = acquireVsCodeApi()
-const data = ref<PartOfSpeech[]>()
+const data = ref<PartOfSpeech[] | string>()
 function handleClick() {
 	vscode.postMessage({
 		command: 'search',
 		word: word.value,
+	})
+}
+function handleTranslate() {
+	vscode.postMessage({
+		command: 'translate',
+		text: word.value,
 	})
 }
 window.addEventListener('message', (e) => {

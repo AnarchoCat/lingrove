@@ -64,6 +64,16 @@
 						},
 						"default": []
 					}
+				},
+				"mmimy.tratu.python": {
+					"type": "string",
+					"default": ".venv/bin/python3",
+					"description": "Path to Python interpreter for LLM based translation."
+				},
+				"mmimy.tratu.translationScript": {
+					"type": "string",
+					"default": "dist/translate-vi-en.py",
+					"description": "Path to LLM based translation Python script."
 				}
 			}
 		},

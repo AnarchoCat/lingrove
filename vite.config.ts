@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
 				fileName: '[name]',
 			},
 			rollupOptions: {
-				external: ['vscode', 'assert', 'fs', 'path'],
+				external: ['vscode', 'assert', 'fs', 'path', 'child_process'],
 			},
 			emptyOutDir: false,
 		},
@@ -35,6 +35,10 @@ export default defineConfig(({ mode }) => {
 				targets: [
 					{
 						src: 'assets/iconDictionary.svg',
+						dest: '',
+					},
+					{
+						src: 'assets/translate-vi-en.py',
 						dest: '',
 					},
 				],

@@ -30,3 +30,29 @@ export function renderTemplate(template: string, data: Record<string, string>) {
 		return data[key.trim()] || ''
 	})
 }
+
+export function isSet<T>(
+	setting:
+		| {
+				key: string
+				defaultValue?: T
+				globalValue?: T
+				workspaceValue?: T
+				workspaceFolderValue?: T
+				defaultLanguageValue?: T
+				globalLanguageValue?: T
+				workspaceLanguageValue?: T
+				workspaceFolderLanguageValue?: T
+				languageIds?: string[]
+		  }
+		| undefined,
+) {
+	return (
+		setting?.globalValue ||
+		setting?.workspaceFolderValue ||
+		setting?.workspaceValue ||
+		setting?.defaultLanguageValue ||
+		setting?.workspaceLanguageValue ||
+		setting?.workspaceFolderLanguageValue
+	)
+}

@@ -17,3 +17,4 @@ assets/**
 **/vite.config.*
 **/mise.toml
 **/postcss.config.*
+.venv/**

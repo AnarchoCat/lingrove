@@ -3,6 +3,8 @@ import Mmimy from '@/mmimy'
 import html from './index.html?raw'
 import { getMediaUri, renderTemplate } from '@/utils'
 import { fetchAndParseDictionary } from './tratu'
+import { exec } from 'child_process'
+import { isSet } from '@/utils'
 
 export class TratuViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = 'mmimy.tratuView'
@@ -41,6 +43,36 @@ export class TratuViewProvider implements vscode.WebviewViewProvider {
 				this.view?.webview.postMessage({
 					data: data,
 				})
+			} else if (e.command === 'translate') {
+				const config = vscode.workspace.getConfiguration('mmimy')
+				const pythonValue = config.get<string>('tratu.python')
+				const pythonInspected = config.inspect<string>('tratu.python')
+				const translationScriptValue = config.get<string>(
+					'tratu.translationScript',
+				)
+				const translationScriptInspected = config.inspect<string>(
+					'tratu.translationScript',
+				)
+				const python = isSet<string>(pythonInspected)
+					? pythonValue
+					: `${this.extension.context.extensionPath}/${pythonValue}`
+				const translationScript = isSet<string>(translationScriptInspected)
+					? translationScriptValue
+					: `${this.extension.context.extensionPath}/${translationScriptValue}`
+				exec(
+					`${python} ${translationScript} "${e.text}"`,
+					(error, stdout, stderr) => {
+						if (error) {
+							vscode.window.showErrorMessage(`Error: ${error.message}`)
+						} else if (stderr) {
+							vscode.window.showErrorMessage(`Stderr: ${stderr}`)
+						} else {
+							this.view?.webview.postMessage({
+								data: stdout,
+							})
+						}
+					},
+				)
 			}
 		})
 	}
