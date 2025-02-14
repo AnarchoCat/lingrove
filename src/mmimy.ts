@@ -3,6 +3,7 @@ import { DictionaryViewProvider } from './dictionaryView'
 import { SearchViewProvider } from './searchView'
 import selectLanguage from './commands/selectLanguage'
 import saveDictionary from './commands/saveDictionary'
+import convertVietnameseToneStyle from './commands/convertVietnameseToneStyle'
 import changeTextEditorSelectionListener from './listeners/changeTextEditorSelectionListener'
 import changeActiveTextEditorListener from './listeners/changeActiveTextEditorListener'
 import { Dictionary } from '@/dictionary'
@@ -51,6 +52,12 @@ export default class Mmimy {
 		)
 		this.context.subscriptions.push(
 			vscode.commands.registerCommand('mmimy.saveDictionary', saveDictionary),
+		)
+		this.context.subscriptions.push(
+			vscode.commands.registerCommand(
+				'mmimy.convertVietnameseToneStyle',
+				convertVietnameseToneStyle,
+			),
 		)
 	}
 

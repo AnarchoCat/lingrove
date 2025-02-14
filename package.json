@@ -85,6 +85,10 @@
 			{
 				"command": "mmimy.saveDictionary",
 				"title": "Save dictionary"
+			},
+			{
+				"command": "mmimy.convertVietnameseToneStyle",
+				"title": "Use new style of tone"
 			}
 		],
 		"viewsContainers": {
