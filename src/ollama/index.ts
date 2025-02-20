@@ -52,24 +52,30 @@ export class OllamaViewProvider implements vscode.WebviewViewProvider {
 					this.model = message.model
 					break
 				case 'chat':
-					ollama
-						.chat(this.buildChatRequest(message.message)!)
-						.then(async (response) => {
-							let partIndex = 0
-							const message: Message = { role: '', content: '' }
-							for await (const part of response) {
-								message.role = part.message.role
-								message.content += part.message.content
-								this.view?.webview.postMessage({
-									message: 'chat',
-									role: part.message.role,
-									isFirstPart: partIndex === 0,
-									content: part.message.content,
-								})
-								partIndex++
-							}
-							this.messages.push(message)
-						})
+					{
+						const request = this.buildChatRequest(
+							message.message,
+							message.images.map((image: number[]) => new Uint8Array(image)),
+						)
+						if (request) {
+							ollama.chat(request).then(async (response) => {
+								let partIndex = 0
+								const message: Message = { role: '', content: '' }
+								for await (const part of response) {
+									message.role = part.message.role
+									message.content += part.message.content
+									this.view?.webview.postMessage({
+										message: 'chat',
+										role: part.message.role,
+										isFirstPart: partIndex === 0,
+										content: part.message.content,
+									})
+									partIndex++
+								}
+								this.messages.push(message)
+							})
+						}
+					}
 					break
 				case 'clear':
 					this.clearChatHistory()
@@ -100,7 +106,7 @@ export class OllamaViewProvider implements vscode.WebviewViewProvider {
 		this.messages = []
 	}
 
-	private buildChatRequest(message: string) {
+	private buildChatRequest(message: string, images: Uint8Array[]) {
 		if (!this.model || !message) {
 			return undefined
 		}
@@ -110,6 +116,7 @@ export class OllamaViewProvider implements vscode.WebviewViewProvider {
 		this.messages.push({
 			role: 'user',
 			content: message,
+			images: images,
 		})
 		const request: ChatRequest & {
 			stream: true
