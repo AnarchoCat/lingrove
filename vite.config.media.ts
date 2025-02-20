@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
 					dictionaryView: '@/dictionaryView/main.ts',
 					searchView: '@/searchView/main.ts',
 					tratu: '@/tratu/main.ts',
+					ollama: '@/ollama/main.ts',
 				},
 				output: {
 					entryFileNames: '[name].js',

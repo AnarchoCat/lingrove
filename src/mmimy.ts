@@ -9,6 +9,7 @@ import changeActiveTextEditorListener from './listeners/changeActiveTextEditorLi
 import { Dictionary } from '@/dictionary'
 import path from 'path'
 import { TratuViewProvider } from './tratu'
+import { OllamaViewProvider } from './ollama'
 export default class Mmimy {
 	public readonly context: vscode.ExtensionContext
 	private static instance?: Mmimy
@@ -105,6 +106,15 @@ export default class Mmimy {
 			vscode.window.registerWebviewViewProvider(
 				TratuViewProvider.viewType,
 				tratuViewProvider,
+			),
+		)
+		const ollamaViewProvider = OllamaViewProvider.getInstance(
+			Mmimy.getInstance(),
+		)
+		this.context.subscriptions.push(
+			vscode.window.registerWebviewViewProvider(
+				OllamaViewProvider.viewType,
+				ollamaViewProvider,
 			),
 		)
 		vscode.commands.executeCommand(

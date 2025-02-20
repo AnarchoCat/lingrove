@@ -5,6 +5,7 @@ import { getMediaUri, renderTemplate } from '@/utils'
 import { fetchAndParseDictionary } from './tratu'
 import { exec } from 'child_process'
 import { isSet } from '@/utils'
+import '@assets/translate-vi-en.py?url&no-inline'
 
 export class TratuViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = 'mmimy.tratuView'

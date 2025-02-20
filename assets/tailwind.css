@@ -1605,6 +1605,9 @@
 :root {
 	@apply text-ui font-ui;
 }
+* {
+	@apply box-border;
+}
 p {
 	@apply my-0;
 }

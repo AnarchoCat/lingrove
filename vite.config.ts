@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import { readdirSync } from 'fs'
 import commonOptions from './vite.config.common'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig(({ mode }) => {
 	const srcDir = resolve(__dirname, 'src')
@@ -26,23 +25,9 @@ export default defineConfig(({ mode }) => {
 				fileName: '[name]',
 			},
 			rollupOptions: {
-				external: ['vscode', 'assert', 'fs', 'path', 'child_process'],
+				external: ['vscode', 'assert', 'fs', 'path', 'child_process', 'ollama'],
 			},
 			emptyOutDir: false,
 		},
-		plugins: [
-			viteStaticCopy({
-				targets: [
-					{
-						src: 'assets/iconDictionary.svg',
-						dest: '',
-					},
-					{
-						src: 'assets/translate-vi-en.py',
-						dest: '',
-					},
-				],
-			}),
-		],
 	}
 })

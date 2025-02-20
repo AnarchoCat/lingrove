@@ -94,7 +94,7 @@
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"icon": "dist/iconDictionary.svg",
+					"icon": "dist/notebook.svg",
 					"id": "dictionary",
 					"title": "Dictionary"
 				}
@@ -120,6 +120,12 @@
 					"title": "Tratu",
 					"name": "Tratu",
 					"when": "mmimy.tratuView.show"
+				},
+				{
+					"type": "webview",
+					"id": "mmimy.ollamaView",
+					"title": "Ollama",
+					"name": "Ollama"
 				}
 			]
 		}
@@ -166,6 +172,7 @@
 		"@vitejs/plugin-vue": "^5.2.1",
 		"@vscode/test-cli": "^0.0.10",
 		"@vscode/test-electron": "^2.4.1",
+		"@vscode/vsce": "^3.2.2",
 		"eslint": "^9.19.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-vue": "^9.32.0",
@@ -176,13 +183,13 @@
 		"tailwindcss": "^4.0.0",
 		"typescript": "^5.7.3",
 		"typescript-eslint": "^8.22.0",
-		"vite": "^6.0.11",
-		"vite-plugin-static-copy": "^2.2.0",
-		"@vscode/vsce": "^3.2.2"
+		"vite": "^6.0.11"
 	},
 	"dependencies": {
+		"@vscode/codicons": "^0.0.36",
 		"axios": "^1.7.9",
 		"cheerio": "^1.0.0",
+		"ollama": "^0.5.13",
 		"trie-search": "^2.2.0",
 		"vue": "^3.5.13"
 	}
