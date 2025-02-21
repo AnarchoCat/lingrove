@@ -26,6 +26,9 @@ export default tseslint.config(
 				parser: tseslint.parser,
 			},
 		},
+		rules: {
+			'vue/no-v-html': 'off',
+		},
 	},
 	eslintConfigPrettier,
 )

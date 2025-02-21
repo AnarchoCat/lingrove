@@ -30,8 +30,8 @@
 					'px-2': message.role === 'user',
 				}"
 			>
-				{{ message.content }}
-				<span v-if="message.images" class="ml-auto"
+				<div class="markdown" v-html="marked.parse(message.content)"></div>
+				<span v-if="message.images && message.images.length > 0" class="ml-auto"
 					><i class="codicon codicon-file-media"></i>x{{
 						message.images.length
 					}}</span
@@ -85,6 +85,7 @@
 </template>
 
 <script setup lang="ts">
+import { marked } from 'marked'
 import { computed, onMounted, ref, useTemplateRef } from 'vue'
 import '@vscode/codicons/dist/codicon.ttf'
 import type { Message, ModelResponse } from 'ollama'
@@ -218,4 +219,14 @@ onMounted(() => {
 @import '@vscode/codicons/dist/codicon.css';
 @source 'app.vue';
 @source 'index.html';
+.markdown {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-bold;
+	}
+}
 </style>
