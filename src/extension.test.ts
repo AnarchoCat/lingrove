@@ -5,7 +5,7 @@ suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.')
 
 	test('Check if extension is active', async () => {
-		const extension = vscode.extensions.getExtension('AnarchoCat.mmimy')
+		const extension = vscode.extensions.getExtension('AnarchoCat.lingrove')
 		assert.ok(extension, 'Extension is not found')
 		await extension?.activate()
 		assert.strictEqual(extension?.isActive, true, 'Extension is not active')

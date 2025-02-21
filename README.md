@@ -1,3 +1,3 @@
-# Mmimy
+# Lingrove
 
-Cat Moyu Extension
+An extension for language learning

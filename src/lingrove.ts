@@ -10,9 +10,9 @@ import { Dictionary } from '@/dictionary'
 import path from 'path'
 import { TratuViewProvider } from './tratu'
 import { OllamaViewProvider } from './ollama'
-export default class Mmimy {
+export default class Lingrove {
 	public readonly context: vscode.ExtensionContext
-	private static instance?: Mmimy
+	private static instance?: Lingrove
 	private languageStatus: vscode.StatusBarItem
 	public readonly dictionary: Dictionary
 
@@ -20,7 +20,7 @@ export default class Mmimy {
 		this.context = context
 		const dictionaryFileName =
 			vscode.workspace
-				.getConfiguration('mmimy')
+				.getConfiguration('lingrove')
 				.get<string>('dictionaryFileName') ?? 'dictionary.json'
 		const dictionaryFilePath = path.join(
 			this.context.globalStorageUri.fsPath,
@@ -32,31 +32,37 @@ export default class Mmimy {
 			vscode.StatusBarAlignment.Right,
 			1,
 		)
-		this.languageStatus.command = 'mmimy.selectLanguage'
+		this.languageStatus.command = 'lingrove.selectLanguage'
 	}
 
-	public static getInstance(context?: vscode.ExtensionContext): Mmimy {
-		if (!Mmimy.instance) {
+	public static getInstance(context?: vscode.ExtensionContext): Lingrove {
+		if (!Lingrove.instance) {
 			if (!context) {
 				throw new Error(
 					'Singleton instance is not initialized. Pass arguments the first time.',
 				)
 			}
-			Mmimy.instance = new Mmimy(context)
+			Lingrove.instance = new Lingrove(context)
 		}
-		return Mmimy.instance
+		return Lingrove.instance
 	}
 
 	private registerCommands(): void {
 		this.context.subscriptions.push(
-			vscode.commands.registerCommand('mmimy.selectLanguage', selectLanguage),
-		)
-		this.context.subscriptions.push(
-			vscode.commands.registerCommand('mmimy.saveDictionary', saveDictionary),
+			vscode.commands.registerCommand(
+				'lingrove.selectLanguage',
+				selectLanguage,
+			),
 		)
 		this.context.subscriptions.push(
 			vscode.commands.registerCommand(
-				'mmimy.convertVietnameseToneStyle',
+				'lingrove.saveDictionary',
+				saveDictionary,
+			),
+		)
+		this.context.subscriptions.push(
+			vscode.commands.registerCommand(
+				'lingrove.convertVietnameseToneStyle',
 				convertVietnameseToneStyle,
 			),
 		)
@@ -71,20 +77,20 @@ export default class Mmimy {
 		this.languageStatus.text = value
 		vscode.commands.executeCommand(
 			'setContext',
-			'mmimy.tratuView.show',
+			'lingrove.tratuView.show',
 			value === 'vi',
 		)
 	}
 
 	private loadConfig() {
-		const config = vscode.workspace.getConfiguration('mmimy')
+		const config = vscode.workspace.getConfiguration('lingrove')
 		const defaultLanguage = config.get<string>('defaultLanguage')
 		this.language = defaultLanguage ?? 'en'
 	}
 
 	private registerViews() {
 		const dictionaryViewProvider = DictionaryViewProvider.getInstance(
-			Mmimy.getInstance(),
+			Lingrove.getInstance(),
 		)
 		this.context.subscriptions.push(
 			vscode.window.registerWebviewViewProvider(
@@ -93,7 +99,7 @@ export default class Mmimy {
 			),
 		)
 		const searchViewProvider = SearchViewProvider.getInstance(
-			Mmimy.getInstance(),
+			Lingrove.getInstance(),
 		)
 		this.context.subscriptions.push(
 			vscode.window.registerWebviewViewProvider(
@@ -101,7 +107,9 @@ export default class Mmimy {
 				searchViewProvider,
 			),
 		)
-		const tratuViewProvider = TratuViewProvider.getInstance(Mmimy.getInstance())
+		const tratuViewProvider = TratuViewProvider.getInstance(
+			Lingrove.getInstance(),
+		)
 		this.context.subscriptions.push(
 			vscode.window.registerWebviewViewProvider(
 				TratuViewProvider.viewType,
@@ -109,7 +117,7 @@ export default class Mmimy {
 			),
 		)
 		const ollamaViewProvider = OllamaViewProvider.getInstance(
-			Mmimy.getInstance(),
+			Lingrove.getInstance(),
 		)
 		this.context.subscriptions.push(
 			vscode.window.registerWebviewViewProvider(
@@ -119,7 +127,7 @@ export default class Mmimy {
 		)
 		vscode.commands.executeCommand(
 			'setContext',
-			'mmimy.tratuView.show',
+			'lingrove.tratuView.show',
 			this.language === 'vi',
 		)
 	}

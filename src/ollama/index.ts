@@ -1,24 +1,24 @@
 import * as vscode from 'vscode'
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 import html from './index.html?raw'
 import { getMediaUri, renderTemplate } from '@/utils'
 import { Ollama } from 'ollama'
 import type { Message, ChatRequest } from 'ollama'
 
 export class OllamaViewProvider implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'mmimy.ollamaView'
+	public static readonly viewType = 'lingrove.ollamaView'
 	private static instance?: OllamaViewProvider
-	private readonly extension: Mmimy
+	private readonly extension: Lingrove
 	private view?: vscode.WebviewView
 	private messages: Message[]
 	private model?: string
 
-	private constructor(extension: Mmimy) {
+	private constructor(extension: Lingrove) {
 		this.extension = extension
 		this.messages = []
 	}
 
-	public static getInstance(extension?: Mmimy) {
+	public static getInstance(extension?: Lingrove) {
 		if (!OllamaViewProvider.instance) {
 			if (!extension) {
 				throw new Error(

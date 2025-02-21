@@ -1,17 +1,17 @@
 import * as vscode from 'vscode'
 import { getNonce, getMediaUri, renderTemplate, cspMeta } from '@/utils'
 import html from './index.html?raw'
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 
 export class DictionaryViewProvider implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'mmimy.dictionaryView'
+	public static readonly viewType = 'lingrove.dictionaryView'
 	private static instance?: DictionaryViewProvider
-	private readonly extension: Mmimy
+	private readonly extension: Lingrove
 
 	private view?: vscode.WebviewView
 	private word: string = ''
 
-	public static getInstance(extension?: Mmimy) {
+	public static getInstance(extension?: Lingrove) {
 		if (!DictionaryViewProvider.instance) {
 			if (!extension) {
 				throw new Error(
@@ -23,7 +23,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 		return DictionaryViewProvider.instance
 	}
 
-	private constructor(extension: Mmimy) {
+	private constructor(extension: Lingrove) {
 		this.extension = extension
 	}
 
@@ -48,7 +48,7 @@ export class DictionaryViewProvider implements vscode.WebviewViewProvider {
 						this.saveNote(message.text, message.note)
 						return
 					case 'saveDictionary':
-						vscode.commands.executeCommand('mmimy.saveDictionary')
+						vscode.commands.executeCommand('lingrove.saveDictionary')
 						return
 				}
 			},

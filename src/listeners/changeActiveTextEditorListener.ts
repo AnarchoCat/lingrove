@@ -1,5 +1,5 @@
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 
 export default () => {
-	Mmimy.getInstance().dictionary.dispose()
+	Lingrove.getInstance().dictionary.dispose()
 }

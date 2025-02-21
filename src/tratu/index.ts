@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 import html from './index.html?raw'
 import { getMediaUri, renderTemplate } from '@/utils'
 import { fetchAndParseDictionary } from './tratu'
@@ -8,16 +8,16 @@ import { isSet } from '@/utils'
 import '@assets/translate-vi-en.py?url&no-inline'
 
 export class TratuViewProvider implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'mmimy.tratuView'
+	public static readonly viewType = 'lingrove.tratuView'
 	private static instance?: TratuViewProvider
-	private readonly extension: Mmimy
+	private readonly extension: Lingrove
 	private view?: vscode.WebviewView
 
-	private constructor(extension: Mmimy) {
+	private constructor(extension: Lingrove) {
 		this.extension = extension
 	}
 
-	public static getInstance(extension?: Mmimy) {
+	public static getInstance(extension?: Lingrove) {
 		if (!TratuViewProvider.instance) {
 			if (!extension) {
 				throw new Error(
@@ -45,7 +45,7 @@ export class TratuViewProvider implements vscode.WebviewViewProvider {
 					data: data,
 				})
 			} else if (e.command === 'translate') {
-				const config = vscode.workspace.getConfiguration('mmimy')
+				const config = vscode.workspace.getConfiguration('lingrove')
 				const python = config.get<string>('tratu.python')
 				const translationScriptValue = config.get<string>(
 					'tratu.translationScript',

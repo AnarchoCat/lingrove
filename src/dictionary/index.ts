@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import * as vscode from 'vscode'
 import TrieSearch from 'trie-search'
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 export class Dictionary implements vscode.Disposable {
 	// Path to the dictionary file
 	private path: string
@@ -31,7 +31,7 @@ export class Dictionary implements vscode.Disposable {
 		word = word.trim()
 		definition = definition.trim()
 		if (word) {
-			const language = Mmimy.getInstance().language
+			const language = Lingrove.getInstance().language
 			if (!(language in this.data)) {
 				this.data[language] = {}
 			}
@@ -53,7 +53,7 @@ export class Dictionary implements vscode.Disposable {
 	}
 
 	public query(word: string): string | undefined {
-		const language = Mmimy.getInstance().language
+		const language = Lingrove.getInstance().language
 		if (this.data[language] === undefined) {
 			return undefined
 		}
@@ -62,7 +62,7 @@ export class Dictionary implements vscode.Disposable {
 
 	public search(prefix: string): string[] {
 		prefix = prefix.trim()
-		const language = Mmimy.getInstance().language
+		const language = Lingrove.getInstance().language
 		if (this.data[language] === undefined) {
 			return []
 		}

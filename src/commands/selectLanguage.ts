@@ -1,4 +1,4 @@
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 import * as vscode from 'vscode'
 import languages from '@assets/languages.json'
 
@@ -20,7 +20,7 @@ export default async function selectLanguage() {
 	}
 	const additionalLanguages =
 		vscode.workspace
-			.getConfiguration('mmimy')
+			.getConfiguration('lingrove')
 			.get<Option[]>('additionalLanguages') ?? []
 	// Show the quick pick list
 	const selectedOption = await vscode.window.showQuickPick(
@@ -34,7 +34,7 @@ export default async function selectLanguage() {
 		vscode.window.showInformationMessage(
 			`Language set to: ${selectedOption.label}`,
 		)
-		Mmimy.getInstance().language = selectedOption.code
+		Lingrove.getInstance().language = selectedOption.code
 	} else {
 		vscode.window.showInformationMessage('No language selected.')
 	}

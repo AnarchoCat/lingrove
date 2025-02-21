@@ -2,19 +2,19 @@ import * as vscode from 'vscode'
 import html from './index.html?raw'
 import { getMediaUri, renderTemplate } from '@/utils'
 import { DictionaryViewProvider } from '@/dictionaryView'
-import Mmimy from '@/mmimy'
+import Lingrove from '@/lingrove'
 
 export class SearchViewProvider implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'mmimy.searchView'
+	public static readonly viewType = 'lingrove.searchView'
 	private static instance?: SearchViewProvider
-	private readonly extension: Mmimy
+	private readonly extension: Lingrove
 	private view?: vscode.WebviewView
 
-	private constructor(extension: Mmimy) {
+	private constructor(extension: Lingrove) {
 		this.extension = extension
 	}
 
-	public static getInstance(extension?: Mmimy) {
+	public static getInstance(extension?: Lingrove) {
 		if (!SearchViewProvider.instance) {
 			if (!extension) {
 				throw new Error(
