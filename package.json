@@ -13,39 +13,25 @@
 		"configuration": {
 			"title": "Lingrove Settings",
 			"properties": {
-				"lingrove.defaultLanguage": {
-					"type": "string",
-					"default": "en",
-					"enum": [
-						"en",
-						"vi",
-						"es",
-						"pt",
-						"fr"
-					],
-					"enumItemLabels": [
-						"English",
-						"Tiếng Việt",
-						"Español",
-						"Português",
-						"Français"
-					],
-					"enumDescriptions": [
-						"🇺🇸🇬🇧",
-						"🇻🇳",
-						"🇪🇸",
-						"🇵🇹🇧🇷",
-						"🇫🇷"
-					],
-					"description": "Select a language."
-				},
 				"lingrove.dictionaryFileName": {
 					"type": "string",
 					"default": "dictionary.json",
 					"description": "The file name (.json) of the dictionary."
 				},
-				"lingrove.additionalLanguages": {
+				"lingrove.languages": {
 					"type": "array",
+					"default": [
+						{
+							"code": "en",
+							"label": "English",
+							"description": "🇺🇸🇬🇧"
+						},
+						{
+							"code": "vi",
+							"label": "Vietnamese",
+							"description": "🇻🇳"
+						}
+					],
 					"items": {
 						"type": "object",
 						"properties": {
@@ -61,8 +47,7 @@
 								"type": "string",
 								"description": "A human-readable description of the language"
 							}
-						},
-						"default": []
+						}
 					}
 				},
 				"lingrove.tratu.python": {

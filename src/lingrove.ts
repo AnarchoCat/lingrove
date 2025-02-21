@@ -10,14 +10,32 @@ import { Dictionary } from '@/dictionary'
 import path from 'path'
 import { TratuViewProvider } from './tratu'
 import { OllamaViewProvider } from './ollama'
+
+interface Language {
+	code: string
+	label: string
+	description: string
+}
+
 export default class Lingrove {
 	public readonly context: vscode.ExtensionContext
 	private static instance?: Lingrove
 	private languageStatus: vscode.StatusBarItem
+	private currentLanguage: string
+	public languages: Language[]
 	public readonly dictionary: Dictionary
 
 	private constructor(context: vscode.ExtensionContext) {
 		this.context = context
+		const config = vscode.workspace.getConfiguration('lingrove')
+		const languages = config.get<Language[]>('languages')
+		if (languages === undefined || languages.length < 1) {
+			throw Error(
+				'Setting lingrove.languages must contain at least one language',
+			)
+		}
+		this.languages = languages
+		this.currentLanguage = languages[0].code
 		const dictionaryFileName =
 			vscode.workspace
 				.getConfiguration('lingrove')
@@ -69,23 +87,17 @@ export default class Lingrove {
 	}
 
 	public get language(): string {
-		return this.context.globalState.get<string>('language') ?? 'en'
+		return this.currentLanguage
 	}
 
 	public set language(value: string) {
-		this.context.globalState.update('language', value)
+		this.currentLanguage = value
 		this.languageStatus.text = value
 		vscode.commands.executeCommand(
 			'setContext',
 			'lingrove.tratuView.show',
 			value === 'vi',
 		)
-	}
-
-	private loadConfig() {
-		const config = vscode.workspace.getConfiguration('lingrove')
-		const defaultLanguage = config.get<string>('defaultLanguage')
-		this.language = defaultLanguage ?? 'en'
 	}
 
 	private registerViews() {
@@ -150,7 +162,6 @@ export default class Lingrove {
 	}
 
 	public activate(): void {
-		this.loadConfig()
 		this.registerCommands()
 		this.registerViews()
 		this.registerListeners()

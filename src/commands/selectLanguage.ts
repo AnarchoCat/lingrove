@@ -1,41 +1,22 @@
 import Lingrove from '@/lingrove'
 import * as vscode from 'vscode'
-import languages from '@assets/languages.json'
 
 interface Option extends vscode.QuickPickItem {
 	code: string
 }
 
 export default async function selectLanguage() {
-	const options: Option[] = []
-	const values = languages.enum
-	const labels = languages.enumItemLabels
-	const descriptions = languages.enumDescriptions
-	for (let i = 0; i < values.length; i++) {
-		options.push({
-			label: labels[i],
-			code: values[i],
-			description: descriptions[i],
-		})
-	}
-	const additionalLanguages =
-		vscode.workspace
-			.getConfiguration('lingrove')
-			.get<Option[]>('additionalLanguages') ?? []
+	const lingrove = Lingrove.getInstance()
+	const options: Option[] = lingrove.languages
 	// Show the quick pick list
-	const selectedOption = await vscode.window.showQuickPick(
-		options.concat(additionalLanguages),
-		{
-			placeHolder: 'Select a language',
-			canPickMany: false,
-		},
-	)
-	if (selectedOption) {
+	const selectedOption = await vscode.window.showQuickPick(options, {
+		placeHolder: 'Select a language',
+		canPickMany: false,
+	})
+	if (selectedOption && selectedOption.code !== lingrove.language) {
 		vscode.window.showInformationMessage(
 			`Language set to: ${selectedOption.label}`,
 		)
-		Lingrove.getInstance().language = selectedOption.code
-	} else {
-		vscode.window.showInformationMessage('No language selected.')
+		lingrove.language = selectedOption.code
 	}
 }
